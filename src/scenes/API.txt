@@ -1,0 +1,271 @@
+[
+    {
+        "id": 1,
+        "nombre": "Utah",
+        "abreviacion": "MA",
+        "libros": [
+            {
+                "id": 11,
+                "codigo": "NXMF-0341",
+                "titulo": "Dolores et necessitatibus reprehenderit.",
+                "autor": "Prof. Merlin Tremblay",
+                "year": 1995,
+                "mueble": "Q63",
+                "observacion": "O",
+                "asignatura_id": 1
+            },
+            {
+                "id": 12,
+                "codigo": "JKIX-6635",
+                "titulo": "Ut aut magni ipsa.",
+                "autor": "Bridgette McClure",
+                "year": 1979,
+                "mueble": "Z85",
+                "observacion": "C",
+                "asignatura_id": 1
+            },
+            {
+                "id": 14,
+                "codigo": "UEOV-6121",
+                "titulo": "Corporis deserunt.",
+                "autor": "Mrs. Albina Lakin PhD",
+                "year": 2015,
+                "mueble": "B50",
+                "observacion": "O",
+                "asignatura_id": 1
+            },
+            {
+                "id": 17,
+                "codigo": "GRXP-4634",
+                "titulo": "Mollitia et facilis enim.",
+                "autor": "Curtis Friesen",
+                "year": 1974,
+                "mueble": "D54",
+                "observacion": "C",
+                "asignatura_id": 1
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "nombre": "Kansas",
+        "abreviacion": "CO",
+        "libros": [
+            {
+                "id": 5,
+                "codigo": "NJON-9117",
+                "titulo": "Porro rerum.",
+                "autor": "Mariano Hermann",
+                "year": 2012,
+                "mueble": "A47",
+                "observacion": "C",
+                "asignatura_id": 2
+            },
+            {
+                "id": 18,
+                "codigo": "KJJQ-5651",
+                "titulo": "Voluptate cumque ut placeat.",
+                "autor": "Dane McClure",
+                "year": 2007,
+                "mueble": "R64",
+                "observacion": "C",
+                "asignatura_id": 2
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "nombre": "Maryland",
+        "abreviacion": "CO",
+        "libros": [
+            {
+                "id": 3,
+                "codigo": "AXQH-7559",
+                "titulo": "Fugit necessitatibus beatae nesciunt.",
+                "autor": "Treva Shields",
+                "year": 1999,
+                "mueble": "G73",
+                "observacion": "O",
+                "asignatura_id": 3
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "nombre": "Wisconsin",
+        "abreviacion": "PA",
+        "libros": [
+            {
+                "id": 16,
+                "codigo": "FQZK-5713",
+                "titulo": "Ab tempora eligendi voluptatem.",
+                "autor": "Emerson Nolan",
+                "year": 1994,
+                "mueble": "L44",
+                "observacion": "O",
+                "asignatura_id": 4
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "nombre": "Missouri",
+        "abreviacion": "RI",
+        "libros": [
+            {
+                "id": 2,
+                "codigo": "BOJK-2339",
+                "titulo": "Voluptas numquam omnis.",
+                "autor": "Brandon Gerhold",
+                "year": 2022,
+                "mueble": "L09",
+                "observacion": "O",
+                "asignatura_id": 5
+            },
+            {
+                "id": 4,
+                "codigo": "UUPC-7647",
+                "titulo": "Sed ipsam tempora.",
+                "autor": "Rafael Gerlach DDS",
+                "year": 2022,
+                "mueble": "J25",
+                "observacion": "C",
+                "asignatura_id": 5
+            },
+            {
+                "id": 6,
+                "codigo": "VYAN-3375",
+                "titulo": "Reprehenderit occaecati praesentium perspiciatis.",
+                "autor": "Mr. Darren Wiegand",
+                "year": 1972,
+                "mueble": "R01",
+                "observacion": "O",
+                "asignatura_id": 5
+            },
+            {
+                "id": 13,
+                "codigo": "SAVP-5713",
+                "titulo": "Velit ipsa recusandae.",
+                "autor": "Prof. Justus Crist",
+                "year": 2006,
+                "mueble": "V72",
+                "observacion": "O",
+                "asignatura_id": 5
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "nombre": "Nevada",
+        "abreviacion": "MS",
+        "libros": [
+            {
+                "id": 7,
+                "codigo": "VRKZ-6363",
+                "titulo": "In sapiente labore iste qui.",
+                "autor": "Amir Prosacco MD",
+                "year": 2020,
+                "mueble": "H72",
+                "observacion": "O",
+                "asignatura_id": 6
+            },
+            {
+                "id": 8,
+                "codigo": "UARL-6521",
+                "titulo": "Ea sed quod.",
+                "autor": "Felton Altenwerth",
+                "year": 1972,
+                "mueble": "V18",
+                "observacion": "C",
+                "asignatura_id": 6
+            },
+            {
+                "id": 20,
+                "codigo": "ISRU-9160",
+                "titulo": "Nostrum est nam possimus.",
+                "autor": "Gertrude Huel",
+                "year": 2009,
+                "mueble": "M45",
+                "observacion": "O",
+                "asignatura_id": 6
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "nombre": "Georgia",
+        "abreviacion": "AK",
+        "libros": [
+            {
+                "id": 1,
+                "codigo": "IALE-8224",
+                "titulo": "Nemo labore alias.",
+                "autor": "Dr. Rosetta Boehm Sr.",
+                "year": 1977,
+                "mueble": "V87",
+                "observacion": "O",
+                "asignatura_id": 7
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "nombre": "Idaho",
+        "abreviacion": "AL",
+        "libros": []
+    },
+    {
+        "id": 9,
+        "nombre": "Vermont",
+        "abreviacion": "LA",
+        "libros": [
+            {
+                "id": 9,
+                "codigo": "SRFV-0950",
+                "titulo": "Placeat vitae rem.",
+                "autor": "Mr. Deon Walter DVM",
+                "year": 1995,
+                "mueble": "H92",
+                "observacion": "C",
+                "asignatura_id": 9
+            },
+            {
+                "id": 10,
+                "codigo": "KLYX-2170",
+                "titulo": "Molestiae est rerum atque.",
+                "autor": "Sincere Hermann",
+                "year": 2000,
+                "mueble": "U19",
+                "observacion": "C",
+                "asignatura_id": 9
+            },
+            {
+                "id": 19,
+                "codigo": "IYGY-9994",
+                "titulo": "A sunt itaque.",
+                "autor": "Marques Boyer",
+                "year": 2003,
+                "mueble": "Q50",
+                "observacion": "C",
+                "asignatura_id": 9
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "nombre": "Idaho",
+        "abreviacion": "WV",
+        "libros": [
+            {
+                "id": 15,
+                "codigo": "GTHX-4618",
+                "titulo": "Veniam aperiam in.",
+                "autor": "Dr. Delia Simonis MD",
+                "year": 2021,
+                "mueble": "N06",
+                "observacion": "O",
+                "asignatura_id": 10
+            }
+        ]
+    }
+]
