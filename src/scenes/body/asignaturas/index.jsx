@@ -155,7 +155,7 @@ export default function index() {
   ];
 
   return (
-    <div className="max-w-screen-xl mx-auto m-10 px-3 py-5 border border-cyan-600">
+    <div className="max-w-screen-xl mx-auto px-3 py-5 border border-cyan-600">
       <motion.div
         initial="closed"
         animate={IsMobileOpen ? "open" : "closed"}

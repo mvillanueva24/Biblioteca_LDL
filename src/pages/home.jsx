@@ -5,9 +5,11 @@ import Principal from "../scenes/body/principal";
 
 export default function Home() {
   return (
-    <div>
+    <div className="relative">
       <Header />
-      <Principal />
+      <section className="h-[screen -60px] pt-32">
+        <Principal />
+      </section>
     </div>
   );
 }

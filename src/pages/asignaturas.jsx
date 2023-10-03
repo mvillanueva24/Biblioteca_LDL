@@ -7,9 +7,11 @@ import BookList from "../scenes/body/asignaturas/bookList";
 
 export default function Asignaturas() {
   return (
-    <div className="">
+    <div className="relative">
       <Header></Header>
-      <AsignaturasP />
+      <section className="h-[screen -60px] pt-24">
+        <AsignaturasP />
+      </section>
     </div>
   );
 }

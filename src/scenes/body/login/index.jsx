@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../../../images/logo.png";
 export default function index() {
   return (
-    <div class="flex flex-col items-center justify-center h-screen px-6 py-8 mx-auto md:h-full lg:py-10">
+    <div class="flex flex-col items-center justify-center h-screen px-6 py-8 mx-auto lg:py-10">
       <a
         href="#"
         class="flex items-center mb-6 text-2xl font-semibold text-gray-900 "
