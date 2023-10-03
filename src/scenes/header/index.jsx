@@ -50,7 +50,7 @@ export function Header() {
   };
 
   return (
-    <nav className="bg-gray-100">
+    <nav className="bg-gray-100 fixed w-full">
       <div className="px-10 mx-auto">
         <div className="flex justify-between">
           <div className="flex space-x-6">
@@ -150,7 +150,7 @@ export function Header() {
         variants={menuVariants}
         className={`${
           isMobileMenuOpen ? "block left-0" : "hidden left-[-100%]"
-        } md:hidden absolute top-0 left-0 w-[17em] h-full bg-white z-30 pt-5 px-3`}
+        } md:hidden absolute h-screen top-0 left-0 w-[17em] bg-white z-30 pt-5 px-3`}
       >
         <motion.div>
           <a className="font-bold text-gray-500 mb-7" href="/asignaturas">
