@@ -50,7 +50,7 @@ export function Header() {
   };
 
   return (
-    <nav className="bg-gray-100 fixed w-full">
+    <nav className="bg-gray-100 fixed w-full z-50">
       <div className="px-10 mx-auto">
         <div className="flex justify-between">
           <div className="flex space-x-6">
