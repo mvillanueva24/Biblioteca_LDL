@@ -87,7 +87,7 @@ const Libros = () => {
     // Cargar la lista de asignaturas
     async function fetchAsignaturas() {
       const response = await fetch(
-        "https://9081-187-86-164-75.ngrok-free.app/api/libros",
+        "https://7211-187-86-164-82.ngrok-free.app/api/libros",
         {
           method: "GET",
           headers: {
@@ -129,7 +129,7 @@ const Libros = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/libros_crear",
+      "https://7211-187-86-164-82.ngrok-free.app/api/libros_crear",
       {
         method: "POST",
         headers: {
@@ -152,7 +152,7 @@ const Libros = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/libros_eliminar",
+      "https://7211-187-86-164-82.ngrok-free.app/api/libros_eliminar",
       {
         method: "POST",
         headers: {
@@ -178,7 +178,7 @@ const Libros = () => {
     };
 
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/libros_editar",
+      "https://7211-187-86-164-82.ngrok-free.app/api/libros_editar",
       {
         method: "POST",
         headers: {
@@ -340,7 +340,7 @@ const Libros = () => {
                       <img
                         src={
                           row.original.portada == null
-                            ? "https://res.cloudinary.com/dzdvijsh8/image/upload/v1698993787/Portadas/images_idmv2q.jpg"
+                            ? "https://res.cloudinary.com/dzdvijsh8/image/upload/v1704550287/Portadas/images_idmv2q_oky4qw.png"
                             : row.original.portada
                         }
                         object-fit="cover"

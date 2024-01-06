@@ -41,7 +41,7 @@ const Asignaturas = () => {
     // Cargar la lista de asignaturas
     async function fetchAsignaturas() {
       const response = await fetch(
-        "https://9081-187-86-164-75.ngrok-free.app/api/asignaturas",
+        "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas",
         {
           method: "GET",
           headers: {
@@ -88,7 +88,7 @@ const Asignaturas = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/asignaturas_eliminar",
+      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_eliminar",
       {
         method: "POST",
         headers: {
@@ -114,7 +114,7 @@ const Asignaturas = () => {
     };
 
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/asignaturas_editar",
+      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_editar",
       {
         method: "POST",
         headers: {
