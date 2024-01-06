@@ -5,15 +5,15 @@ import BookList from "./bookList";
 
 const filterButton = (props) => {
   return (
-    <div className="flex gap-2 w-full h-20 border border-purple-500 py-3 px-5">
+    <div className="flex gap-2 w-full h-20 border border-black py-3 px-5">
       <button
         onClick={() => props.menuActivate()}
         value="Filtro"
-        className="w-1/5 border border-green-600 p-1 text-sm md:text-base"
+        className="w-1/5 bg-[#3386c3] text-white hover:bg-[#236aa6] rounded-md  p-1 text-sm md:text-base"
       >
         Asignaturas
       </button>
-      <form action="" className="flex items-center w-full border border-black">
+      <form action="" className="flex items-center w-full">
         {/* Ajustar el ancho del formulario */}
         <div className="relative flex items-center w-full text-gray-400 focus-within:text-gray-600">
           <svg

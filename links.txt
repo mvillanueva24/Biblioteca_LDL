@@ -1,0 +1,3 @@
+D:\Proyectos\bibilioteca_duncker\catalogo_biblioteca_duncker\src\scenes\body\asignaturas\booksMenu.jsx
+D:\Proyectos\bibilioteca_duncker\catalogo_biblioteca_duncker\src\scenes\body\asignaturas\index.jsx
+D:\Proyectos\bibilioteca_duncker\catalogo_biblioteca_duncker\src\scenes\body\asignaturas\bookList\index.jsx

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { links } from "./Mylinks";
 
 export default function NavLinks() {
   const [heading, setHeading] = useState("");
