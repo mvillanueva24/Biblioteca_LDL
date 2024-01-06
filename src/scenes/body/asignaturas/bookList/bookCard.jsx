@@ -77,12 +77,12 @@ export default function BookCard(props) {
               Reservar
             </button>
           </div>
-          <div className="w-[20%] border border-blue-600 mt-1">
+          <div className="w-[20%] mt-2">
             <img
               className="h-full w-full object-contain"
               src={
                 props.libro.portada == null
-                  ? "https://res.cloudinary.com/dzdvijsh8/image/upload/v1698993787/Portadas/images_idmv2q.jpg"
+                  ? "https://res.cloudinary.com/dzdvijsh8/image/upload/v1704550287/Portadas/images_idmv2q_oky4qw.png"
                   : props.libro.portada
               }
               alt="icono"
