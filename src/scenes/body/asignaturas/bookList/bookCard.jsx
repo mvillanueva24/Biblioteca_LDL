@@ -77,7 +77,7 @@ export default function BookCard(props) {
               Reservar
             </button>
           </div>
-          <div className="w-[20%] mt-1">
+          <div className="w-[20%] mt-3">
             <img
               className="h-full w-full object-contain"
               src={
