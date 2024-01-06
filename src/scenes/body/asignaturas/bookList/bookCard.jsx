@@ -11,7 +11,7 @@ export default function BookCard(props) {
 
   // POST booking
   const [idLibro, setIdLibro] = useState(props.libro.id);
-  const [idUser, setIdUser] = useState();
+  const [idUser, setIdUser] = useState(5);
 
   const handleFechaEntregaChange = (event) => {
     const nuevaFechaEntrega = event.target.value;
@@ -108,6 +108,7 @@ export default function BookCard(props) {
                 fechaEntrega,
                 fechaDevolucion
               );
+              setShowModal(false);
             }}
             action=""
             method="post"

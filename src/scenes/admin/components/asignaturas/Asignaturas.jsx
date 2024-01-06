@@ -65,7 +65,7 @@ const Asignaturas = () => {
       abreviacion: abrevAsignatura,
     };
     const response = await fetch(
-      "https://9081-187-86-164-75.ngrok-free.app/api/asignaturas_crear",
+      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_crear",
       {
         method: "POST",
         headers: {

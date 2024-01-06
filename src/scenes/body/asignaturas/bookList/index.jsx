@@ -5,7 +5,7 @@ export default function index(props) {
   function newBooking(idLibro, idUser, fechaEntrega, fechaDevolucion) {
     const data = {
       libro_id: idLibro,
-      alumno_id: 2,
+      alumno_id: idUser,
       fecha_entrega: fechaEntrega,
       fecha_devolucion: fechaDevolucion,
     };
