@@ -22,7 +22,7 @@ export default function BooksMenu(props) {
       id: idAsign,
     };
     const url =
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_eliminar";
+      "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas_eliminar";
     fetch(url, {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ export default function BooksMenu(props) {
       abreviacion: abrevAsignatura,
     };
     const url =
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_editar";
+      "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas_editar";
     fetch(url, {
       method: "POST",
       headers: {

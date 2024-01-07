@@ -96,7 +96,7 @@ export default function index() {
     // Realizar la solicitud a la API usando fetch
     const fetchData = async () => {
       const result = await fetch(
-        "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas",
+        "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas",
         {
           method: "GET",
           headers: {
@@ -119,7 +119,7 @@ export default function index() {
     // Realizar la solicitud a la API usando fetch
     const fetchData = async () => {
       const result = await fetch(
-        "https://7211-187-86-164-82.ngrok-free.app/api/libros",
+        "https://3317-187-86-164-82.ngrok-free.app/api/libros",
         {
           method: "GET",
           headers: {
@@ -203,7 +203,7 @@ export default function index() {
       abreviacion: abrevAsignatura,
     };
     const url =
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_crear";
+      "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas_crear";
     fetch(url, {
       method: "POST",
       headers: {

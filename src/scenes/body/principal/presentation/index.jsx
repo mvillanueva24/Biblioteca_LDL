@@ -1,5 +1,5 @@
 import React from "react";
-import PresentLogo from "../../../../images/logo-titulo.png";
+import PresentLogo from "../../../../images/logo-titulo-2.png";
 
 export default function index() {
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/swiper.min.css";
@@ -13,6 +13,50 @@ import "swiper/swiper-bundle.min.css";
 SwiperCore.use([Navigation, Pagination]);
 
 export default function index() {
+  const [libros, setLibros] = useState([]);
+
+  // useEffect(() => {
+  //   // Realizar la solicitud a la API usando fetch
+  //   const fetchData = async () => {
+  //     const result = await fetch(
+  //       "https://7211-187-86-164-82.ngrok-free.app/api/libros",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
+  //           // "Content-Type": "application/json",
+  //           "ngrok-skip-browser-warning": "69420",
+
+  //           // Otras cabeceras según sea necesario
+  //         },
+  //       }
+  //     );
+  //     result.json().then((json) => {
+  //       setLibros(json);
+  //     });
+  //   };
+  //   fetchData();
+  // }, []);
+
+  useEffect(() => {
+    // Realiza la consulta al backend
+    fetch("https://3317-187-86-164-82.ngrok-free.app/api/libros", {
+      method: "GET",
+      headers: {
+        // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
+        // "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+
+        // Otras cabeceras según sea necesario
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Almacena los resultados en el estado
+        setLibros(data);
+      });
+  }, []);
+
   return (
     <div className="flex bg-gray-100 mt-16 h-auto p-3">
       <Swiper
@@ -48,27 +92,11 @@ export default function index() {
         navigation={true}
         modules={[Navigation]}
       >
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Libro />
-        </SwiperSlide>
+        {libros.map((libro) => (
+          <SwiperSlide key={libro.id}>
+            <Libro libro={libro} libros={libros} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
