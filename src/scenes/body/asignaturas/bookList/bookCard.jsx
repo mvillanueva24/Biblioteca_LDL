@@ -71,7 +71,7 @@ export default function BookCard(props) {
               Disponible: {props.libro.disponibilidad ? "Sí" : "No"}
             </h5>
             <button
-              className="border border-green-700 p-2 rounded-lg text-sm sm:text-base "
+              className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
               onClick={() => setShowModal(true)}
             >
               Reservar

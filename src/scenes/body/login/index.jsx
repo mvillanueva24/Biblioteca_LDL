@@ -51,7 +51,7 @@ export default function index() {
 
             <button
               type="submit"
-              class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-bluery-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+              class="w-full bg-[#3386c3] hover:bg-[#236aa6] text-white focus:ring-4 focus:outline-none focus:ring-bluery-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
             >
               Iniciar Sesión
             </button>

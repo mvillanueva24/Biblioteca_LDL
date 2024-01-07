@@ -9,7 +9,7 @@ export default function index(props) {
       fecha_entrega: fechaEntrega,
       fecha_devolucion: fechaDevolucion,
     };
-    const url = "https://7211-187-86-164-82.ngrok-free.app/api/reservas_crear";
+    const url = "https://3317-187-86-164-82.ngrok-free.app/api/reservas_crear";
     fetch(url, {
       method: "POST",
       headers: {
