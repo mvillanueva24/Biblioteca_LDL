@@ -50,14 +50,14 @@ export function Header() {
   };
 
   return (
-    <nav className="bg-[#f3f7fc] fixed w-full z-50">
+    <nav className="bg-[#e5eff9] fixed w-full z-50">
       <div className="px-10 mx-auto">
         <div className="flex justify-between">
           <div className="flex space-x-6">
             {/* logo */}
             <div>
               <a
-                href="#"
+                href="/"
                 className="flex items-center py-3 px-3 text-gray-700 hover:text-gray-900"
               >
                 <img src={Logo} alt="icono" className="h-12 w-12" />
@@ -77,8 +77,8 @@ export function Header() {
           <div className="hidden md:flex items-center">
             <a
               href=""
-              className="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 
-              hover:text-yellow-800 rounded transition duration-300 shadow"
+              className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
+              hover:text-white rounded transition duration-300 shadow"
             >
               Login
             </a>
