@@ -74,15 +74,32 @@ export function Header() {
           </div>
 
           {/* nav secundario */}
-          <div className="hidden md:flex items-center">
-            <a
-              href=""
+          {/* <Link to="/login" className="hidden md:flex items-center">
+            <button
               className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
               hover:text-white rounded transition duration-300 shadow"
             >
               Login
-            </a>
+            </button>
+          </Link> */}
+          <div className="hidden md:flex items-center">
+            <Link
+              to="/login"
+              className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
+              hover:text-white rounded transition duration-300 shadow"
+            >
+              Login
+            </Link>
           </div>
+          {/* <div className="hidden md:flex items-center">
+            <Link
+              to="/login"
+              className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
+              hover:text-white rounded transition duration-300 shadow"
+            >
+              Login
+            </Link>
+          </div> */}
 
           {/* mobile button goes here */}
           <div className="md:hidden flex items-center">
@@ -125,7 +142,11 @@ export function Header() {
         animate={isMobileMenuOpen ? "open" : "closed"}
         variants={moveButtonToTopRight}
         whileTap={{ scale: 0.8 }} // Animación de escala al presionar el botón
-        className={`absolute top-3 right-3 bg-white rounded-full p-2 z-30`}
+        className={`${
+          isMobileMenuOpen
+            ? "block top-3 right-3 rounded-full p-2 z-30"
+            : "hidden left-[-100%]"
+        } md:hidden absolute bg-white`}
         onClick={() => setMobileMenuOpen(false)}
       >
         <svg
@@ -153,10 +174,22 @@ export function Header() {
         } md:hidden absolute h-screen top-0 left-0 w-[17em] bg-white z-30 pt-5 px-3`}
       >
         <motion.div>
-          <a className="font-bold text-gray-500 mb-7" href="/asignaturas">
-            Asignaturas
-          </a>
-          <ul className="h-auto mt-3">
+          <div className="py-1 pl-[0.10rem] cursor-pointer rounded hover:bg-[#f3f7fc]">
+            <Link className="font-bold text-gray-500 mb-7 " to="/asignaturas">
+              Asignaturas
+            </Link>
+          </div>
+
+          <div className="mt-10">
+            <Link
+              to="/login"
+              className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
+              hover:text-white rounded transition duration-300 shadow"
+            >
+              Login
+            </Link>
+          </div>
+          {/* <ul className="h-auto mt-3">
             {navLinks.map((asig) => (
               <a href="">
                 <li key={asig.id} className="py-1 h-auto">
@@ -164,7 +197,7 @@ export function Header() {
                 </li>
               </a>
             ))}
-          </ul>
+          </ul> */}
         </motion.div>
       </motion.nav>
     </nav>
