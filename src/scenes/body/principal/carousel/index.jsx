@@ -40,7 +40,7 @@ export default function index() {
 
   useEffect(() => {
     // Realiza la consulta al backend
-    fetch("https://3317-187-86-164-82.ngrok-free.app/api/libros", {
+    fetch("https://da5e-187-86-164-86.ngrok-free.app/api/libros_admin", {
       method: "GET",
       headers: {
         // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
