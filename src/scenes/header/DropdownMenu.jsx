@@ -40,7 +40,7 @@ const DropdownMenu = (props) => {
         Asignaturas
       </Link>
 
-      <div
+      {/* <div
         className={`absolute left-0 top-full ${
           showSubMenu ? "block" : "hidden"
         }`}
@@ -69,7 +69,7 @@ const DropdownMenu = (props) => {
             </li>
           ))}
         </motion.ul>
-      </div>
+      </div> */}
     </nav>
   );
 };
