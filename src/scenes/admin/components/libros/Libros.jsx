@@ -17,7 +17,7 @@ import {
   AiOutlineFileImage,
 } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
-
+const domain_url = import.meta.env.VITE_DOMAIN_DB;
 const Libros = () => {
   const [data, setData] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -87,7 +87,7 @@ const Libros = () => {
     // Cargar la lista de asignaturas
     async function fetchAsignaturas() {
       const response = await fetch(
-        "https://7211-187-86-164-82.ngrok-free.app/api/libros",
+        `${domain_url}/api/libros_admin`,
         {
           method: "GET",
           headers: {
@@ -129,7 +129,7 @@ const Libros = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/libros_crear",
+      `${domain_url}/api/libros_crear`,
       {
         method: "POST",
         headers: {
@@ -152,7 +152,7 @@ const Libros = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/libros_eliminar",
+      `${domain_url}/api/libros_eliminar`,
       {
         method: "POST",
         headers: {
@@ -178,7 +178,7 @@ const Libros = () => {
     };
 
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/libros_editar",
+      `${domain_url}/api/libros_editar`,
       {
         method: "POST",
         headers: {

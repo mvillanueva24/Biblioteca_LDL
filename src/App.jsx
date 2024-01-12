@@ -9,10 +9,9 @@ import Admin from "./scenes/admin";
 import Asignaturas from "./scenes/admin/components/asignaturas/Asignaturas";
 import Libros from "./scenes/admin/components/libros/Libros";
 import Reservas from "./scenes/admin/components/reservas/Reservas";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+function App() {  
   return (
     <div>
       <Router>
@@ -25,7 +24,7 @@ function App() {
           <Route path="/admin/libros" element={<Libros />} />
           <Route path="/admin/reservas" element={<Reservas />} /> */}
         </Routes>
-      </Router>
+      </Router> 
     </div>
   );
 }

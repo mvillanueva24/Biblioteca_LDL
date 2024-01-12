@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
 
+const domain_url = import.meta.env.VITE_DOMAIN_DB;
+
 const Asignaturas = () => {
   const [data, setData] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);
@@ -41,7 +43,8 @@ const Asignaturas = () => {
     // Cargar la lista de asignaturas
     async function fetchAsignaturas() {
       const response = await fetch(
-        "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas",
+        `${domain_url}/api/asignaturas`,
+        // "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas",
         {
           method: "GET",
           headers: {
@@ -65,7 +68,7 @@ const Asignaturas = () => {
       abreviacion: abrevAsignatura,
     };
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_crear",
+      `${domain_url}/api/asignaturas_crear`,
       {
         method: "POST",
         headers: {
@@ -88,7 +91,7 @@ const Asignaturas = () => {
     };
     console.log(data);
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_eliminar",
+      `${domain_url}/api/asignaturas_eliminar`,
       {
         method: "POST",
         headers: {
@@ -114,7 +117,7 @@ const Asignaturas = () => {
     };
 
     const response = await fetch(
-      "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas_editar",
+      `${domain_url}/api/asignaturas_editar`,
       {
         method: "POST",
         headers: {
