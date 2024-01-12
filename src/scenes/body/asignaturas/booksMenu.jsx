@@ -21,8 +21,7 @@ export default function BooksMenu(props) {
     const data = {
       id: idAsign,
     };
-    const url =
-      "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas_eliminar";
+    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/asignaturas_eliminar`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -52,8 +51,7 @@ export default function BooksMenu(props) {
       nombre: asig,
       abreviacion: abrevAsignatura,
     };
-    const url =
-      "https://3317-187-86-164-82.ngrok-free.app/api/asignaturas_editar";
+    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/asignaturas_editar`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -108,7 +106,11 @@ export default function BooksMenu(props) {
   // }
 
   return (
-    <div className="px-3 py-3 border-r-2 border-b-2 border-gray-400">
+    <div
+      className={`${
+        props.Menustate ? "border-r-2 border-b-2 border-gray-400" : " "
+      } px-3 py-3 `}
+    >
       <h4 className="font-bold text-xl m-3">Asignaturas</h4>
       {/* <button
         onClick={() => setShowModal(true)}
