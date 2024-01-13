@@ -17,9 +17,14 @@ import {
   AiOutlineFileImage,
 } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
+
+//URL DB
 const domain_url = import.meta.env.VITE_DOMAIN_DB;
+
+// COMPONENTE
 const Libros = () => {
   const [data, setData] = useState([]);
+  const [dataAsig, setDataAsig] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -75,7 +80,9 @@ const Libros = () => {
   };
 
   const handleDisponChange = (event) => {
-    setDispon(event.target.value);
+    const disponibilidad = event.target.value === 'true';
+    setDispon(disponibilidad);
+    console.log(dispon)
   };
 
   const handleIdAsignChange = (event) => {
@@ -84,8 +91,8 @@ const Libros = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Cargar la lista de asignaturas
-    async function fetchAsignaturas() {
+    // Cargar la lista de libros
+    async function fetchLibros() {
       const response = await fetch(
         `${domain_url}/api/libros_admin`,
         {
@@ -100,6 +107,29 @@ const Libros = () => {
 
       setData(data);
       setIsLoading(false);
+    }
+
+    fetchLibros();
+  }, []);
+
+  useEffect(() => {
+    // Cargar la lista de asignaturas
+    async function fetchAsignaturas() {
+      const response = await fetch(
+        `${domain_url}/api/asignaturas`,
+        {
+          method: "GET",
+          headers: {
+            "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
+          },
+        }
+      );
+
+      const dataAsig = await response.json();
+      
+      setDataAsig(dataAsig);
+      setIsLoading(false);
+      // console.log("Data de Asignaturas:", dataAsig)
     }
 
     fetchAsignaturas();
@@ -146,7 +176,7 @@ const Libros = () => {
     // Actualizar la lista de asignaturas
   }
 
-  async function delAsignatura(idAsign) {
+  async function delLibro(idAsign) {
     const data = {
       id: idAsign,
     };
@@ -170,11 +200,26 @@ const Libros = () => {
     // Actualizar la lista de asignaturas
   }
 
-  async function editAsignatura(id, asig, abrevAsignatura) {
+  async function editLibro(
+    id, 
+    codigo, 
+    titulo,
+    autor,
+    year,
+    mueble,
+    observacion,
+    disponibilidad,
+    asignatura_id) {
     const data = {
       id: id,
-      nombre: asig,
-      abreviacion: abrevAsignatura,
+      codigo: codigo,
+      titulo: titulo,
+      autor: autor,
+      year: year,
+      mueble: mueble,
+      observacion: observacion,
+      disponibilidad: disponibilidad,
+      asignatura_id: asignatura_id
     };
 
     const response = await fetch(
@@ -233,12 +278,17 @@ const Libros = () => {
       ),
       header: "Observación",
     }),
-    columnHelper.accessor("Disponibilidad", {
-      cell: (info) => <span>{info.getValue() ? "Sí" : "No"}</span>,
+    columnHelper.accessor("disponibilidad", {
+      cell: (info) => <span>{info.getValue() == true ? "Sí" : "No"}</span>,
       header: "Disponibilidad",
     }),
     columnHelper.accessor("asignatura_id", {
-      cell: (info) => <span>{info.getValue()}</span>,
+      cell: (info) => {
+        const asignaturaEncontrada  = dataAsig.find((asignatura) => asignatura.id === info.getValue());
+        //No podemos usar directamente la const asignaturaEncontrada, debemos renderizar las propiedades en otra constante.
+        const idAsignatura = asignaturaEncontrada.nombre;
+        return <span>{idAsignatura}</span>
+      },
       header: "Asignatura",
     }),
   ];
@@ -273,6 +323,14 @@ const Libros = () => {
             className="mt-3 bg-[#3386c3] text-white hover:bg-[#236aa6] rounded-md p-2 "
             onClick={() => {
               setShowModalAdd(true);
+              setCodigo("");
+              setTitulo("");
+              setAutor("");
+              setYear("");
+              setMueble("");
+              setObser("");
+              setDispon("");
+              setIdAsign("");
             }}
           >
             Agregar
@@ -314,8 +372,23 @@ const Libros = () => {
                     className="bg-blue-400 text-white p-2 rounded-lg"
                     onClick={() => {
                       setSelectedItemId(row.original.id);
-                      setSelectedItemName(row.original.nombre);
-                      setSelectedItemAbrev(row.original.abreviacion);
+                      setSelectedItemCodigo(row.original.codigo);
+                      setSelectedItemTitulo(row.original.titulo);
+                      setSelectedItemAutor(row.original.autor);
+                      setSelectedItemYear(row.original.year);
+                      setSelectedItemMueble(row.original.mueble);
+                      setSelectedItemObser(row.original.observacion);
+                      setSelectedItemPortada(row.original.portada);
+                      setSelectedItemDispon(row.original.disponibilidad);
+                      setSelectedItemAsignId(row.original.asignatura_id);
+                      setCodigo(row.original.codigo);
+                      setTitulo(row.original.titulo);
+                      setAutor(row.original.autor);
+                      setYear(row.original.year);
+                      setMueble(row.original.mueble);
+                      setObser(row.original.observacion);
+                      setDispon(row.original.disponibilidad);
+                      setIdAsign(row.original.asignatura_id);
                       setShowModalEdit(true);
                     }}
                   >
@@ -387,6 +460,7 @@ const Libros = () => {
           </strong>
         </span>
       </div>
+
       <Modal isVisible={showModalAdd} onClose={() => setShowModalAdd(false)}>
         <div className=" p-6">
           <h3 className="text-xl font-semibold">Crear Libro</h3>
@@ -433,14 +507,11 @@ const Libros = () => {
               </div>
               <div>
                 <p className="mb-1">Asignatura</p>
-                <input
-                  type="text"
-                  name="abrev_asignatura"
-                  id="abrev_asignatura"
-                  value={idAsign}
-                  onChange={handleIdAsignChange}
-                  className="w-auto border border-black p-1"
-                />
+                <select name="abrev_asignatura" onChange={handleIdAsignChange} className="border border-black p-1 rounded-sm">
+                {dataAsig.map((asig)=>(
+                  <option key={asig.id} value={asig.id}>{asig.nombre}</option>  
+                ))}
+                </select>
               </div>
             </div>
             <p className="mt-2 mb-1">Título</p>
@@ -531,6 +602,176 @@ const Libros = () => {
               className="mt-3 bg-blue-600 text-white p-2 hover:bg-blue-500"
             >
               Agregar
+            </button>
+          </form>
+        </div>
+      </Modal>
+      <Modal isVisible={showModalEdit} onClose={() => setShowModalEdit(false)}>
+        <div className=" p-6">
+          <h3 className="text-xl font-semibold">Editar Libro</h3>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              editLibro(
+                selectedItemId,
+                codigo,
+                titulo,
+                autor,
+                year,
+                mueble,
+                obser,
+                dispon,
+                idAsign
+              );
+              setShowModalAdd(false);
+            }}
+            method="post"
+            encType="multipart/form-data"
+            className="mt-4 flex flex-col"
+          >
+            <div className="flex gap-16">
+              <div>
+                <p className="mb-1">Código</p>
+                <input
+                  type="text"
+                  name="nombre_asignatura"
+                  id="nombre_asignatura"
+                  value={codigo}
+                  onChange={handleCodigoChange}
+                  className="w-auto border border-black p-1"
+                />
+              </div>
+              <div>
+                <p className="mb-1">Asignatura</p>
+                <select name="abrev_asignatura" onChange={handleIdAsignChange} value={idAsign} className="border border-black p-1 rounded-sm">
+                {dataAsig.map((asig)=>(
+                  <option key={asig.id} value={asig.id}>{asig.nombre}</option>  
+                ))}
+                </select>
+              </div>
+            </div>
+            <p className="mt-2 mb-1">Título</p>
+            <input
+              type="text"
+              name="abrev_asignatura"
+              id="abrev_asignatura"
+              value={titulo}
+              onChange={handleTituloChange}
+              className="w-auto border border-black p-1"
+            />
+            <p className="mt-2 mb-1">Autor</p>
+            <input
+              type="text"
+              name="abrev_asignatura"
+              id="abrev_asignatura"
+              value={autor}
+              onChange={handleAutorChange}
+              className="w-auto border border-black p-1"
+            />
+            <div className="flex gap-5">
+              <div>
+                <p className="mt-2 mb-1">Año</p>
+                <input
+                  type="number"
+                  min="1200"
+                  max="2050"
+                  step="1"
+                  name="abrev_asignatura"
+                  id="abrev_asignatura"
+                  value={year == null ? 1900 : year}
+                  onChange={handleYearChange}
+                  className="w-auto border border-black p-1"
+                  maxLength="4"
+                />
+              </div>
+              <div>
+                <p className="mt-2 mb-1">Mueble</p>
+                <input
+                  type="text"
+                  name="abrev_asignatura"
+                  id="abrev_asignatura"
+                  value={mueble}
+                  onChange={handleMuebleChange}
+                  className="w-32 border border-black p-1"
+                  maxLength="4"
+                />
+              </div>
+              <div>
+                <p className="mt-2 mb-1">Observación</p>
+                <select
+                  name="observ"
+                  onChange={handleObserChange}
+                  value={obser}
+                  className="border border-black p-1 rounded-sm"
+                >
+                  <option value="O">Original</option>
+                  <option value="C">Copia</option>
+                </select>
+              </div>
+              <div>
+                <p className="mt-2 mb-1">Disponibilidad</p>
+                <select
+                  name="observ"
+                  onChange={handleDisponChange}
+                  className="border border-black p-1 rounded-sm"
+                  value={dispon}
+                >
+                  
+                  <option value={true}>Disponible</option>
+                  <option value={false}>No Disponible</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <p className="mt-2 mb-1">Portada</p>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                value={portada}
+                onChange={handlePortadaChange}
+                className="w-auto border border-black p-1"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="mt-3 bg-blue-600 text-white p-2 hover:bg-blue-500"
+            >
+              Modificar
+            </button>
+          </form>
+        </div>
+      </Modal>
+      {/* Eliminar Asignatura */}
+      <Modal isVisible={showModalDelete} onClose={() => setShowModalDelete(false)}>
+        <div className=" p-6">
+          <h3 className="text-xl font-semibold">Eliminar Libro</h3>
+          <h3 className="mt-5 text-lg text-center font-semibold">
+            ¿Desea eliminar el libro: {selectedItemTitulo}?
+          </h3>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              delLibro(selectedItemId);
+              setShowModalDelete(false);
+            }}
+            action=""
+            method="delete"
+            className="mt-8 grid grid-cols-2 justify-items-stretch gap-7 w-full "
+          >
+            <button
+              type="submit"
+              className=" bg-gray-500 text-white p-2 hover:bg-gray-400"
+              onClick={() => setShowModalDelete(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="bg-red-700 text-white p-2 hover:bg-red-400"
+            >
+              Eliminar
             </button>
           </form>
         </div>
