@@ -18,6 +18,7 @@ import {
 } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
 
+
 //URL DB
 const domain_url = import.meta.env.VITE_DOMAIN_DB;
 
@@ -40,6 +41,8 @@ const Libros = () => {
   const [selectedItemPortada, setSelectedItemPortada] = useState(null);
   const [selectedItemDispon, setSelectedItemDispon] = useState(null);
   const [selectedItemAsignId, setSelectedItemAsignId] = useState(null);
+
+  const [mostrarPortada, setMostrarPortada] = useState(null);
 
   const [codigo, setCodigo] = useState("");
   const [titulo, setTitulo] = useState("");
@@ -77,6 +80,8 @@ const Libros = () => {
 
   const handlePortadaChange = (event) => {
     setPortada(event.target.files[0]);
+    setMostrarPortada(URL.createObjectURL(event.target.files[0]))
+    console.log(portada)
   };
 
   const handleDisponChange = (event) => {
@@ -88,6 +93,11 @@ const Libros = () => {
   const handleIdAsignChange = (event) => {
     setIdAsign(event.target.value);
   };
+
+  const handlePortadaRemove = () => {
+    setPortada(null)
+  }
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -126,7 +136,7 @@ const Libros = () => {
       );
 
       const dataAsig = await response.json();
-      
+
       setDataAsig(dataAsig);
       setIsLoading(false);
       // console.log("Data de Asignaturas:", dataAsig)
@@ -141,34 +151,33 @@ const Libros = () => {
     autor,
     year,
     mueble,
-    obser,
-    portada,
-    dispon,
-    idAsign
-  ) {
-    const data = {
-      codigo: codigo,
-      titulo: titulo,
-      autor: autor,
-      year: year,
-      mueble: mueble,
-      observacion: obser,
-      image: portada,
-      disponibilidad: dispon,
-      asignatura_id: idAsign,
-    };
-    console.log(data);
+    observacion,
+    disponibilidad,
+    asignatura_id,
+    portada) {
+
+    const formData = new FormData();
+    formData.append('codigo', codigo);
+    formData.append('titulo', titulo);
+    formData.append('autor', autor);
+    formData.append('year', year);
+    formData.append('mueble', mueble);
+    formData.append('observacion', observacion);
+    formData.append('disponibilidad', disponibilidad);
+    formData.append('asignatura_id', asignatura_id);
+    formData.append('portada', portada);
+
     const response = await fetch(
       `${domain_url}/api/libros_crear`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         },
-        body: JSON.stringify(data),
+        body: formData,
       }
     );
+    console.log(formData)
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
@@ -201,39 +210,40 @@ const Libros = () => {
   }
 
   async function editLibro(
-    id, 
-    codigo, 
+    id,
+    codigo,
     titulo,
     autor,
     year,
     mueble,
     observacion,
     disponibilidad,
-    asignatura_id) {
-    const data = {
-      id: id,
-      codigo: codigo,
-      titulo: titulo,
-      autor: autor,
-      year: year,
-      mueble: mueble,
-      observacion: observacion,
-      disponibilidad: disponibilidad,
-      asignatura_id: asignatura_id
-    };
+    asignatura_id,
+    portada) {
+
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('codigo', codigo);
+    formData.append('titulo', titulo);
+    formData.append('autor', autor);
+    formData.append('year', year);
+    formData.append('mueble', mueble);
+    formData.append('observacion', observacion);
+    formData.append('disponibilidad', disponibilidad);
+    formData.append('asignatura_id', asignatura_id);
+    formData.append('portada', portada);
 
     const response = await fetch(
       `${domain_url}/api/libros_editar`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         },
-        body: JSON.stringify(data),
+        body: formData,
       }
     );
-
+    console.log(formData)
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
@@ -284,9 +294,9 @@ const Libros = () => {
     }),
     columnHelper.accessor("asignatura_id", {
       cell: (info) => {
-        const asignaturaEncontrada  = dataAsig.find((asignatura) => asignatura.id === info.getValue());
+        const asignaturaEncontrada = dataAsig.find((asignatura) => asignatura.id === info.getValue());
         //No podemos usar directamente la const asignaturaEncontrada, debemos renderizar las propiedades en otra constante.
-        const idAsignatura = asignaturaEncontrada.nombre;
+        const idAsignatura = asignaturaEncontrada ? asignaturaEncontrada.nombre : null;
         return <span>{idAsignatura}</span>
       },
       header: "Asignatura",
@@ -331,6 +341,7 @@ const Libros = () => {
               setObser("");
               setDispon("");
               setIdAsign("");
+              setPortada(null);
             }}
           >
             Agregar
@@ -388,6 +399,7 @@ const Libros = () => {
                       setMueble(row.original.mueble);
                       setObser(row.original.observacion);
                       setDispon(row.original.disponibilidad);
+                      setPortada(null);
                       setIdAsign(row.original.asignatura_id);
                       setShowModalEdit(true);
                     }}
@@ -467,15 +479,6 @@ const Libros = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              setCodigo("");
-              setTitulo("");
-              setAutor("");
-              setYear("");
-              setMueble("");
-              setObser("");
-              setPortada("");
-              setDispon("");
-              setIdAsign("");
               newLibro(
                 codigo,
                 titulo,
@@ -483,9 +486,9 @@ const Libros = () => {
                 year,
                 mueble,
                 obser,
-                portada,
                 dispon,
-                idAsign
+                idAsign,
+                portada
               );
               setShowModalAdd(false);
             }}
@@ -508,9 +511,9 @@ const Libros = () => {
               <div>
                 <p className="mb-1">Asignatura</p>
                 <select name="abrev_asignatura" onChange={handleIdAsignChange} className="border border-black p-1 rounded-sm">
-                {dataAsig.map((asig)=>(
-                  <option key={asig.id} value={asig.id}>{asig.nombre}</option>  
-                ))}
+                  {dataAsig.map((asig) => (
+                    <option key={asig.id} value={asig.id}>{asig.nombre}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -591,9 +594,8 @@ const Libros = () => {
                 type="file"
                 name="file"
                 id="file"
-                value={portada}
                 onChange={handlePortadaChange}
-                className="w-auto border border-black p-1"
+                className="w-auto border border-black p-1 self-center"
               />
             </div>
 
@@ -608,6 +610,8 @@ const Libros = () => {
       </Modal>
       <Modal isVisible={showModalEdit} onClose={() => setShowModalEdit(false)}>
         <div className=" p-6">
+          {console.log(selectedItemPortada)}
+          {console.log(portada)}
           <h3 className="text-xl font-semibold">Editar Libro</h3>
           <form
             onSubmit={(e) => {
@@ -621,7 +625,8 @@ const Libros = () => {
                 mueble,
                 obser,
                 dispon,
-                idAsign
+                idAsign,
+                portada
               );
               setShowModalAdd(false);
             }}
@@ -644,9 +649,9 @@ const Libros = () => {
               <div>
                 <p className="mb-1">Asignatura</p>
                 <select name="abrev_asignatura" onChange={handleIdAsignChange} value={idAsign} className="border border-black p-1 rounded-sm">
-                {dataAsig.map((asig)=>(
-                  <option key={asig.id} value={asig.id}>{asig.nombre}</option>  
-                ))}
+                  {dataAsig.map((asig) => (
+                    <option key={asig.id} value={asig.id}>{asig.nombre}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -716,7 +721,7 @@ const Libros = () => {
                   className="border border-black p-1 rounded-sm"
                   value={dispon}
                 >
-                  
+
                   <option value={true}>Disponible</option>
                   <option value={false}>No Disponible</option>
                 </select>
@@ -724,14 +729,65 @@ const Libros = () => {
             </div>
             <div>
               <p className="mt-2 mb-1">Portada</p>
-              <input
-                type="file"
-                name="file"
-                id="file"
-                value={portada}
-                onChange={handlePortadaChange}
-                className="w-auto border border-black p-1"
-              />
+              {
+                selectedItemPortada === null ? (
+                  <div className="flex">
+                    {
+                      portada === null ? (
+                        <div className="w-full p-1 self-center text-center">
+                          <label htmlFor="file" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Subir nueva portada
+                            <input type="file"
+                              name="file"
+                              id="file"
+                              onChange={handlePortadaChange}
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+                      ) : (
+                        <div className="w-full p-1 self-center text-center">
+                          <div className="flex flex-col items-center justify-center text-center">
+                            <br />
+                            <img src={mostrarPortada} width={100} height={200} alt="Portada" />
+                            <p>{portada.name}</p>
+                            <button onClick={handlePortadaRemove} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Eliminar archivo</button>
+                          </div>
+                        </div>
+                      )
+                    }
+                  </div>
+
+                ) : (
+                  <div className="flex">
+                    <img src={selectedItemPortada} width={200} height={300} alt="Portada" />
+                    {
+                      portada === null ? (
+                        <div className="w-full p-1 self-center text-center">
+                          <label htmlFor="file" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Subir nueva portada
+                            <input type="file"
+                              name="file"
+                              id="file"
+                              onChange={handlePortadaChange}
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+                      ) : (
+                        <div className="w-full p-1 self-center text-center">
+                          <div className="flex flex-col items-center justify-center text-center">
+                            <br />
+                            <img src={mostrarPortada} width={100} height={200} alt="Portada" />
+                            <p>{portada.name}</p>
+                            <button onClick={handlePortadaRemove} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Eliminar archivo</button>
+                          </div>
+                        </div>
+                      )
+                    }
+                  </div>
+                )
+              }
             </div>
 
             <button
