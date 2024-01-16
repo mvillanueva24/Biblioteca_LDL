@@ -7,6 +7,8 @@ export default function BooksMenu(props) {
   const [asig, setAsignatura] = useState("");
   const [abrevAsignatura, setAbrevAsignatura] = useState("");
 
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+
   const handleNombreAsignaturaChange = (event) => {
     setAsignatura(event.target.value);
     //setFechaDevolucion(fechaEntrega);
@@ -16,64 +18,6 @@ export default function BooksMenu(props) {
     setAbrevAsignatura(event.target.value);
     //setFechaDevolucion(fechaEntrega);
   };
-
-  function elimAsign(idAsign) {
-    const data = {
-      id: idAsign,
-    };
-    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/asignaturas_eliminar`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Algo salió mal :c");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // add was succeful
-        //hide the modal
-        //make sure the list updated
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  function editAsign(id, asig, abrevAsignatura) {
-    const data = {
-      id: id,
-      nombre: asig,
-      abreviacion: abrevAsignatura,
-    };
-    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/asignaturas_editar`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Algo salió mal :c");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // add was succeful
-        //hide the modal
-        //make sure the list updated
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
 
   // function newAsignatura(asig, abrevAsignatura) {
   //   const data = {
@@ -120,11 +64,13 @@ export default function BooksMenu(props) {
       </button> */}
       <ul className="h-auto">
         {props.DataAsignaturas.map((asig) => (
-          <AsigOptions
-            asigdata={asig}
-            elimAsign={elimAsign}
-            editAsign={editAsign}
-          ></AsigOptions>
+          <li
+            key={asig.id}
+            onClick={() => props.seleccionarAsignatura(asig.id)}
+            className="py-2 h-auto border-t text-lg hover:bg-gray-100 pl-1 flex"
+          >
+            {asig.nombre}
+          </li>
         ))}
       </ul>
 

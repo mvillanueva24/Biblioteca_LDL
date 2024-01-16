@@ -13,6 +13,7 @@ import "swiper/swiper-bundle.min.css";
 SwiperCore.use([Navigation, Pagination]);
 
 export default function index() {
+  const url = import.meta.env.VITE_DOMAIN_DB;
   const [libros, setLibros] = useState([]);
 
   // useEffect(() => {
@@ -40,7 +41,7 @@ export default function index() {
 
   useEffect(() => {
     // Realiza la consulta al backend
-    fetch("https://da5e-187-86-164-86.ngrok-free.app/api/libros_admin", {
+    fetch(`${url}/api/libros_admin`, {
       method: "GET",
       headers: {
         // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",

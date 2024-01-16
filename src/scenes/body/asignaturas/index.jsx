@@ -5,11 +5,12 @@ import FilterButton from "./filterButton";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import global from "../../../global";
-import axios from "axios";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 export default function index() {
   let isTab = useMediaQuery({ query: "(max-width: 980px" });
-
+  const url = import.meta.env.VITE_DOMAIN_DB;
   const [IsMobileOpen, setIsMobileOpen] = useState(false);
   const [IsMenuOpen, setIsMenuOpen] = useState(true);
 
@@ -61,9 +62,20 @@ export default function index() {
   const [asignaturas, setAsignaturas] = useState([]); // Aquí almacenaremos los datos de la API
   const [libros, setLibros] = useState([]);
   const [info, setInfo] = useState({});
-  const url = "https://da5e-187-86-164-86.ngrok-free.app";
+
   const [page, setCurrentPage] = useState(1);
-  const urlLibros = `https://da5e-187-86-164-86.ngrok-free.app/api/libros?page=${page}`;
+  let urlLibros = null;
+  const [establecerAsignatura, setEstablecesAsignatura] = useState("");
+
+  const seleccionarAsignatura = (datoshijo) => {
+    setEstablecesAsignatura(datoshijo);
+  };
+
+  if (establecerAsignatura) {
+    urlLibros = `${url}/api/libros/${establecerAsignatura}?page=${page}`;
+  } else {
+    urlLibros = `${url}/api/libros?page=${page}`;
+  }
   // const storedPage = localStorage.getItem('currentPage');
   // return storedPage ? parseInt(storedPage, 10) : 1;
   useEffect(() => {
@@ -88,34 +100,50 @@ export default function index() {
 
   const fetchLibros = (url) => {
     const fetchData = async () => {
-      const result = await fetch(url, {
-        method: "GET",
-        headers: {
-          // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
-          // "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
+      if (establecerAsignatura) {
+        const result2 = await fetch(url, {
+          method: "GET",
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
 
-          // Otras cabeceras según sea necesario
-        },
-      });
-      result.json().then((json) => {
-        setLibros(json.data);
-        setInfo(json);
-      });
+            // Otras cabeceras según sea necesario
+          },
+        });
+        result2.json().then((json) => {
+          setLibros(json.data);
+          console.log(establecerAsignatura);
+          setInfo(json);
+        });
+      } else {
+        const result = await fetch(url, {
+          method: "GET",
+          headers: {
+            // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
+            // "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "69420",
+
+            // Otras cabeceras según sea necesario
+          },
+        });
+        result.json().then((json) => {
+          setLibros(json.data);
+          setInfo(json);
+        });
+      }
     };
     fetchData();
   };
 
   useEffect(() => {
     fetchLibros(urlLibros);
-  }, [page]);
+  }, [page, establecerAsignatura]);
 
   function newAsignatura(asig, abrevAsignatura) {
     const data = {
       nombre: asig,
       abreviacion: abrevAsignatura,
     };
-    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/asignaturas_crear`;
+    const url = `${url}/api/asignaturas_crear`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -203,34 +231,84 @@ export default function index() {
             <BooksMenu
               DataAsignaturas={asignaturas}
               Menustate={IsMenuOpen}
-              crearAsignatura={newAsignatura}
+              seleccionarAsignatura={seleccionarAsignatura}
             />
           </div>
           <div className="w-full">
-            <BookList libros={libros} />
+            <BookList libros={libros} asignatura={establecerAsignatura} />
           </div>
         </div>
 
-        <div className="flex justify-center gap-1">
+        <div className="flex justify-center gap-4 mt-3">
           {info.prev_page_url ? (
-            <div>
-              <button
-                className="bg-gray-100 border border-black px-2 py-1"
-                onClick={() => setCurrentPage((prev_page) => prev_page - 1)}
-              >
-                Anterior
-              </button>
+            <div
+              className="flex justify-center items-center bg-[#3386c3] text-white hover:bg-[#236aa6] px-2 py-1 rounded-full cursor-pointer"
+              onClick={() => setCurrentPage((prev_page) => prev_page - 1)}
+            >
+              <MdNavigateBefore size={30} />
+            </div>
+          ) : null}
+
+          {info.current_page > 1 ? (
+            <div
+              className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] border border-[#1e5586] px-4 rounded-full cursor-pointer"
+              onClick={() => setCurrentPage(1)}
+            >
+              1
+            </div>
+          ) : null}
+
+          {/* {info.current_page > 1 ? (
+            <div className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] border border-[#1e5586] px-4 rounded-full">
+              {info.current_page - 1}
+            </div>
+          ) : null} */}
+
+          {info.current_page - 1 >= 2 ? (
+            <div
+              className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] px-4 rounded-full"
+              onClick={() => setCurrentPage(info.last_page)}
+            >
+              <AiOutlineEllipsis />
+            </div>
+          ) : null}
+          <div
+            className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586]  border border-[#1e5586] px-4 rounded-full cursor-pointer"
+            onClick={() => setCurrentPage(info.current_page)}
+          >
+            {info.current_page}
+          </div>
+
+          {/* {info.current_page == info.last_page ? (
+            <div className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] border border-[#1e5586] px-4 rounded-full">
+              {info.last_page - 1}
+            </div>
+          ) : null} */}
+
+          {info.last_page - info.current_page >= 2 ? (
+            <div
+              className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] px-4 rounded-full"
+              onClick={() => setCurrentPage(info.last_page)}
+            >
+              <AiOutlineEllipsis />
+            </div>
+          ) : null}
+
+          {info.current_page != info.last_page ? (
+            <div
+              className="flex justify-center items-center bg-[#e5eff9] text-[#1e5586] border border-[#1e5586] px-4 rounded-full cursor-pointer"
+              onClick={() => setCurrentPage(info.last_page)}
+            >
+              {info.last_page}
             </div>
           ) : null}
 
           {info.next_page_url ? (
-            <div>
-              <button
-                className="bg-gray-100 border border-black px-2 py-1"
-                onClick={() => setCurrentPage((next_page) => next_page + 1)}
-              >
-                Siguiente
-              </button>
+            <div
+              className="flex justify-center items-center bg-[#3386c3] text-white hover:bg-[#236aa6] px-2 py-1 rounded-full cursor-pointer"
+              onClick={() => setCurrentPage((next_page) => next_page + 1)}
+            >
+              <MdNavigateNext size={30} />
             </div>
           ) : null}
         </div>
