@@ -331,8 +331,6 @@ const Asignaturas = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              setAsignatura("");
-              setAbrevAsignatura("");
               editAsignatura(selectedItemId, nombreAsignatura, abrevAsignatura);
               setShowModalEdit(false);
             }}
@@ -370,10 +368,7 @@ const Asignaturas = () => {
         </div>
       </Modal>
       {/* Eliminar Asignatura */}
-      <Modal
-        isVisible={showModalDelete}
-        onClose={() => setShowModalDelete(false)}
-      >
+      <Modal isVisible={showModalDelete} onClose={() => setShowModalDelete(false)}>
         <div className=" p-6">
           <h3 className="text-xl font-semibold">Eliminar Asignatura</h3>
           <h3 className="mt-5 text-lg text-center font-semibold">
