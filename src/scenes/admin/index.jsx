@@ -32,7 +32,6 @@ function index() {
             text="Reservas"
             path="/admin/reservas"
           />
-          <SidebarItem icon={<LuBook size={27} />} text="ALEATORIO" />
         </Sidebar>
         <div className="w-full p-10 px-24">
           <Routes>
