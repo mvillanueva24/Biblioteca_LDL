@@ -292,13 +292,14 @@ const Libros = () => {
       cell: (info) => <span>{info.getValue() == true ? "Sí" : "No"}</span>,
       header: "Disponibilidad",
     }),
-    columnHelper.accessor("asignatura_id", {
-      cell: (info) => {
-        const asignaturaEncontrada = dataAsig.find((asignatura) => asignatura.id === info.getValue());
-        //No podemos usar directamente la const asignaturaEncontrada, debemos renderizar las propiedades en otra constante.
-        const idAsignatura = asignaturaEncontrada ? asignaturaEncontrada.nombre : null;
-        return <span>{idAsignatura}</span>
-      },
+    columnHelper.accessor("asignatura", {
+      cell: (info) => <span>{info.getValue()}</span>,
+      // cell: (info) => {
+      //   const asignaturaEncontrada = dataAsig.find((asignatura) => asignatura.id === info.getValue());
+      //   //No podemos usar directamente la const asignaturaEncontrada, debemos renderizar las propiedades en otra constante.
+      //   const idAsignatura = asignaturaEncontrada ? asignaturaEncontrada.nombre : null;
+      //   return <span>{idAsignatura}</span>
+      // },
       header: "Asignatura",
     }),
   ];
