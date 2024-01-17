@@ -1,29 +1,36 @@
 import React, { useState } from "react";
 import Logo from "../../../images/logo.png";
+import { useStateContext } from "../../../contexts/ContextProvider";
+
 export default function index() {
-  const [codigo, setCodigo] = useState("");
+  const { setCurrentUser, setUserToken } = useStateContext();
+  const [dni, setDni] = useState("");
   const [password, setPassword] = useState("");
+  // const [redirect, setRedirect] = useState(false);
+  const url = import.meta.env.VITE_DOMAIN_DB;
 
   const handleLogin = async (event) => {
     event.preventDefault();
     const data = {
-      libro_id: idLibro,
-      alumno_id: idUser,
-      fecha_entrega: fechaEntrega,
-      fecha_devolucion: fechaDevolucion,
+      dni: dni,
+      password: password,
     };
-    await fetch("url", {
+    console.log(data);
+    await fetch(`${url}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify(data),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Algo salió mal :c");
-        }
-        return response.json();
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data.user);
+        // Almacena el usuario en el estado
+        // setUser(user);
+        setCurrentUser(data.user);
+        setUserToken(data.token);
       })
       .catch((e) => {
         console.log(e);
@@ -47,14 +54,14 @@ export default function index() {
           <form class="space-y-4 md:space-y-6" onSubmit={handleLogin}>
             <div>
               <label class="block mb-2 text-sm font-medium text-gray-900 ">
-                Código de Alumno
+                DNI del Alumno
               </label>
               <input
-                value={codigo}
-                onChange={(e) => setCodigo(e.target.value)}
-                name="codigo"
+                value={dni}
+                onChange={(e) => setDni(e.target.value)}
+                name="dni"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-bluery-600 focus:border-bluery-600 block w-full p-2.5"
-                placeholder="Alumno1"
+                placeholder="DNI"
               />
             </div>
             <div>
