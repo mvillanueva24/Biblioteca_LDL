@@ -3,6 +3,7 @@ import Logo from "../../images/logo.png";
 import DropdownMenu from "./DropdownMenu";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 export function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -49,6 +50,9 @@ export function Header() {
     open: { x: "calc(100% - 60px)", y: "7px", opacity: 1 },
   };
 
+  const { currentUser, userToken, setCurrentUser, setUserToken } =
+    useStateContext();
+
   return (
     <nav className="bg-[#e5eff9] fixed w-full z-50">
       <div className="px-10 mx-auto">
@@ -64,6 +68,7 @@ export function Header() {
                 <span className="font-bold">Biblioteca LDL</span>
               </a>
             </div>
+            {currentUser.nombre}
             {/* nav principal */}
             <div className="hidden md:flex items-center space-x-1">
               {/* <h4 className="py-2 px-3 text-gray-700 hover:text-gray-900">
