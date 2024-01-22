@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import{ useNavigate } from 'react-router-dom';
 import Logo from "../../../images/logo.png";
 import { useStateContext } from "../../../contexts/ContextProvider";
 
@@ -8,9 +9,10 @@ export default function index() {
   const [password, setPassword] = useState("");
   // const [redirect, setRedirect] = useState(false);
   const url = import.meta.env.VITE_DOMAIN_DB;
-
+  const navigate = useNavigate();
   const handleLogin = async (event) => {
     event.preventDefault();
+    
     const data = {
       dni: dni,
       password: password,
@@ -31,6 +33,7 @@ export default function index() {
         // setUser(user);
         setCurrentUser(data.user);
         setUserToken(data.token);
+        navigate('/');
       })
       .catch((e) => {
         console.log(e);
