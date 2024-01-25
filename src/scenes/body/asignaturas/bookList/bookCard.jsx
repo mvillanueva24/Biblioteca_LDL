@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Book from "../../../../images/Claudio-Gabis-portada.jpg";
 import Modal from "../modal";
+import { useStateContext } from "../../../../contexts/ContextProvider";
 
 export default function BookCard(props) {
   // Data
@@ -8,6 +9,10 @@ export default function BookCard(props) {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [fechaDevolucion, setFechaDevolucion] = useState("");
   const [maxDate, setMaxDate] = useState("");
+
+  const token = localStorage.getItem("TOKEN");
+  const { currentUser, userToken, setCurrentUser, setUserToken } =
+    useStateContext();
 
   // POST booking
   const [idLibro, setIdLibro] = useState(props.libro.id);
@@ -40,6 +45,45 @@ export default function BookCard(props) {
     setFechaDevolucion(event.target.value);
     //setFechaDevolucion(fechaEntrega);
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (!token) {
+          // Manejar la situación en la que no hay token disponible
+          console.error("No hay token disponible");
+          return;
+        }
+
+        // Realiza la solicitud GET a la ruta '/me' incluyendo el token en el encabezado de Authorization
+        const response = await fetch(`${url}/api/yo`, {
+          method: "GET",
+          headers: {
+            "ngrok-skip-browser-warning": "69420",
+            Authorization: `Bearer ${token}`,
+            // Puedes incluir otros encabezados según sea necesario
+          },
+          // Puedes incluir otras opciones de configuración según tus necesidades
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al obtener datos del servidor");
+        }
+
+        // Parsea la respuesta como JSON
+        const data = await response.json();
+
+        // Actualiza el estado del usuario con los datos recibidos
+        setCurrentUser(data.user);
+      } catch (error) {
+        console.error(error);
+        // Puedes manejar el error de alguna manera, por ejemplo, mostrar un mensaje al usuario
+      }
+    };
+
+    // Llama a la función para obtener y establecer los datos del usuario
+    fetchUserData();
+  }, []);
 
   return (
     <Fragment>
@@ -104,7 +148,7 @@ export default function BookCard(props) {
               setFechaDevolucion("");
               props.crearReserva(
                 idLibro,
-                idUser,
+                currentUser.id,
                 fechaEntrega,
                 fechaDevolucion
               );

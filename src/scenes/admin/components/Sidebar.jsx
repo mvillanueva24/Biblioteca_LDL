@@ -4,27 +4,13 @@ import { Link } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";
 import { BiLastPage, BiFirstPage } from "react-icons/bi";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import SubMenu from "./SubMenu";
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
   return (
-    // <div className="w-1/5 h-screen mt-20 border-gray-100 border-r-2">
-    //   <div>
-    //     <ul>
-    //       <li>
-    //         <Link to="admin/">Inicio</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="admin/">Asignaturas</Link>
-    //       </li>
-    //       <li>
-    //         <Link to="admin/">Lirios</Link>
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </div>
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
         <div className="p-2 pr-5 pb-2 flex justify-between items-center border-b">
@@ -73,8 +59,9 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert, path }) {
+export function SidebarItem({ icon, text, active, alert, path, items }) {
   const { expanded } = useContext(SidebarContext);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
   return (
     <a href={path}>
       <li
@@ -87,7 +74,9 @@ export function SidebarItem({ icon, text, active, alert, path }) {
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
             : "hover:bg-indigo-50 text-gray-600"
         }
+        ${submenuOpen ? "group" : ""}
     `}
+        onClick={() => setSubmenuOpen(!submenuOpen)}
       >
         {icon}
         <span
@@ -118,6 +107,7 @@ export function SidebarItem({ icon, text, active, alert, path }) {
           </div>
         )}
       </li>
+      {items && <SubMenu items={items} subMenuState={submenuOpen} />}
     </a>
   );
 }
