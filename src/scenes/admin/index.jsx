@@ -1,17 +1,18 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import { SidebarItem } from "./components/Sidebar";
 import Asignaturas from "./components/asignaturas/Asignaturas";
 import Libros from "./components/libros/Libros";
 import Reservas from "./components/reservas/Reservas";
-
 import {
   LuBook,
   LuMusic,
   LuCalendarDays,
   LuCalendarClock,
 } from "react-icons/lu";
+import { Outlet, useNavigation } from "react-router-dom";
+
+import { RotatingLines } from "react-loader-spinner";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Entregas from "./components/entregas/Entregas.jsx";
@@ -19,12 +20,21 @@ import Entregados from "./components/entregas/Entregados.jsx";
 import NoEntregados from "./components/entregas/NoEntregados.jsx";
 import Devueltos from "./components/entregas/Devueltos.jsx";
 
+export const reservaLoader = async () => {
+  const response = await fetch(`${domain_url}/api/reservas`);
+  const data = await response.json();
+  return data;
+};
+
 function index() {
+  const domain_url = import.meta.env.VITE_DOMAIN_DB;
   const subMenusEntregas = [
     { text: "No entregados", icon: "LuBook", path: "no-entregado" },
     { nombre: "Entregados", icon: "LuBook", path: "entregado" },
     { nombre: "Devueltos", icon: "LuMusic", path: "devuelto" },
   ];
+
+  const { state } = useNavigation();
 
   return (
     <div>
@@ -60,7 +70,7 @@ function index() {
               {
                 text: "No Entregado",
                 path: "entregas/no-entregado",
-                icon: "LuCalendarX ",
+                icon: "LuCalendarX",
               },
               {
                 text: "Devuelto",
@@ -71,15 +81,23 @@ function index() {
           />
         </Sidebar>
         <div className="w-full p-10 px-24">
-          <Routes>
-            <Route path="asignaturas" element={<Asignaturas />} />
-            <Route path="libros" element={<Libros />} />
-            <Route path="reservas" element={<Reservas />} />
-            <Route path="entregas" element={<Entregas />} />
-            <Route path="entregas/entregado" element={<Entregados />} />
-            <Route path="entregas/no-entregado" element={<NoEntregados />} />
-            <Route path="entregas/devuelto" element={<Devueltos />} />
-          </Routes>
+          {state == "loading" ? (
+            <div className="h-full flex content-center justify-center">
+              <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </div>
       </div>
     </div>

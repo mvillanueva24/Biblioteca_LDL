@@ -6,27 +6,43 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import AsignaturasUser from "./pages/asignaturas";
 import Admin from "./scenes/admin";
-import Asignaturas from "./scenes/admin/components/asignaturas/Asignaturas";
-import Libros from "./scenes/admin/components/libros/Libros";
-import Reservas from "./scenes/admin/components/reservas/Reservas";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Asignaturas, {
+  asignaturaLoader,
+} from "./scenes/admin/components/asignaturas/Asignaturas";
+import Libros, { librosLoader } from "./scenes/admin/components/libros/Libros";
+import Reservas, {
+  reservaLoader,
+} from "./scenes/admin/components/reservas/Reservas";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 
-function App() {  
-  return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/asignaturas" element={<AsignaturasUser />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<Admin />} />
-          {/* <Route path="/admin/asignaturas" element={<Asignaturas />} />
-          <Route path="/admin/libros" element={<Libros />} />
-          <Route path="/admin/reservas" element={<Reservas />} /> */}
-        </Routes>
-      </Router> 
-    </div>
-  );
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" index element={<Home />} />
+      <Route path="asignaturas" element={<AsignaturasUser />} />
+      <Route path="login" element={<Login />} />
+      <Route path="admin" element={<Admin />}>
+        <Route
+          path="asignaturas"
+          element={<Asignaturas />}
+          loader={asignaturaLoader}
+        />
+        <Route path="libros" element={<Libros />} loader={librosLoader} />
+        <Route path="reservas" element={<Reservas />} loader={reservaLoader} />
+      </Route>
+    </Route>
+  )
+);
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -23,7 +23,7 @@ export default function Submenu({ items, subMenuState }) {
         
     `}
           >
-            React.createElement({item.icon}, size: 27 )
+            {getIconComponent(item.icon)}
             <span className={`overflow-hidden transition-all ml-2`}>
               {item.text}
             </span>
@@ -32,4 +32,20 @@ export default function Submenu({ items, subMenuState }) {
       ))}
     </ul>
   );
+}
+
+function getIconComponent(iconName) {
+  const iconMapping = {
+    LuBookOpen: LuBookOpen,
+    LuCalendarX: LuCalendarX,
+    LuBookOpenCheck: LuBookOpenCheck,
+  };
+
+  const IconComponent = iconMapping[iconName];
+
+  if (IconComponent) {
+    return <IconComponent size={27} />;
+  } else {
+    return null; // Puedes manejar el caso cuando el icono no se encuentra en el mapeo.
+  }
 }

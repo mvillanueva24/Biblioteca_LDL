@@ -17,14 +17,14 @@ import {
   AiOutlineFileImage,
 } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
-
+import { useLoaderData } from "react-router-dom";
 
 //URL DB
 const domain_url = import.meta.env.VITE_DOMAIN_DB;
 
 // COMPONENTE
 const Libros = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [dataAsig, setDataAsig] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -80,14 +80,14 @@ const Libros = () => {
 
   const handlePortadaChange = (event) => {
     setPortada(event.target.files[0]);
-    setMostrarPortada(URL.createObjectURL(event.target.files[0]))
-    console.log(portada)
+    setMostrarPortada(URL.createObjectURL(event.target.files[0]));
+    console.log(portada);
   };
 
   const handleDisponChange = (event) => {
-    const disponibilidad = event.target.value === 'true';
+    const disponibilidad = event.target.value === "true";
     setDispon(disponibilidad);
-    console.log(dispon)
+    console.log(dispon);
   };
 
   const handleIdAsignChange = (event) => {
@@ -95,55 +95,10 @@ const Libros = () => {
   };
 
   const handlePortadaRemove = () => {
-    setPortada(null)
-  }
+    setPortada(null);
+  };
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Cargar la lista de libros
-    async function fetchLibros() {
-      const response = await fetch(
-        `${domain_url}/api/libros_admin`,
-        {
-          method: "GET",
-          headers: {
-            "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      setData(data);
-      setIsLoading(false);
-    }
-
-    fetchLibros();
-  }, []);
-
-  useEffect(() => {
-    // Cargar la lista de asignaturas
-    async function fetchAsignaturas() {
-      const response = await fetch(
-        `${domain_url}/api/asignaturas`,
-        {
-          method: "GET",
-          headers: {
-            "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
-          },
-        }
-      );
-
-      const dataAsig = await response.json();
-
-      setDataAsig(dataAsig);
-      setIsLoading(false);
-      // console.log("Data de Asignaturas:", dataAsig)
-    }
-
-    fetchAsignaturas();
-  }, []);
+  const data = useLoaderData();
 
   async function newLibro(
     codigo,
@@ -154,30 +109,27 @@ const Libros = () => {
     observacion,
     disponibilidad,
     asignatura_id,
-    portada) {
-
+    portada
+  ) {
     const formData = new FormData();
-    formData.append('codigo', codigo);
-    formData.append('titulo', titulo);
-    formData.append('autor', autor);
-    formData.append('year', year);
-    formData.append('mueble', mueble);
-    formData.append('observacion', observacion);
-    formData.append('disponibilidad', disponibilidad);
-    formData.append('asignatura_id', asignatura_id);
-    formData.append('portada', portada);
+    formData.append("codigo", codigo);
+    formData.append("titulo", titulo);
+    formData.append("autor", autor);
+    formData.append("year", year);
+    formData.append("mueble", mueble);
+    formData.append("observacion", observacion);
+    formData.append("disponibilidad", disponibilidad);
+    formData.append("asignatura_id", asignatura_id);
+    formData.append("portada", portada);
 
-    const response = await fetch(
-      `${domain_url}/api/libros_crear`,
-      {
-        method: "POST",
-        headers: {
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: formData,
-      }
-    );
-    console.log(formData)
+    const response = await fetch(`${domain_url}/api/libros_crear`, {
+      method: "POST",
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: formData,
+    });
+    console.log(formData);
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
@@ -190,17 +142,14 @@ const Libros = () => {
       id: idAsign,
     };
     console.log(data);
-    const response = await fetch(
-      `${domain_url}/api/libros_eliminar`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${domain_url}/api/libros_eliminar`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
@@ -219,31 +168,28 @@ const Libros = () => {
     observacion,
     disponibilidad,
     asignatura_id,
-    portada) {
-
+    portada
+  ) {
     const formData = new FormData();
-    formData.append('id', id);
-    formData.append('codigo', codigo);
-    formData.append('titulo', titulo);
-    formData.append('autor', autor);
-    formData.append('year', year);
-    formData.append('mueble', mueble);
-    formData.append('observacion', observacion);
-    formData.append('disponibilidad', disponibilidad);
-    formData.append('asignatura_id', asignatura_id);
-    formData.append('portada', portada);
+    formData.append("id", id);
+    formData.append("codigo", codigo);
+    formData.append("titulo", titulo);
+    formData.append("autor", autor);
+    formData.append("year", year);
+    formData.append("mueble", mueble);
+    formData.append("observacion", observacion);
+    formData.append("disponibilidad", disponibilidad);
+    formData.append("asignatura_id", asignatura_id);
+    formData.append("portada", portada);
 
-    const response = await fetch(
-      `${domain_url}/api/libros_editar`,
-      {
-        method: "POST",
-        headers: {
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: formData,
-      }
-    );
-    console.log(formData)
+    const response = await fetch(`${domain_url}/api/libros_editar`, {
+      method: "POST",
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: formData,
+    });
+    console.log(formData);
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
@@ -511,9 +457,15 @@ const Libros = () => {
               </div>
               <div>
                 <p className="mb-1">Asignatura</p>
-                <select name="abrev_asignatura" onChange={handleIdAsignChange} className="border border-black p-1 rounded-sm">
+                <select
+                  name="abrev_asignatura"
+                  onChange={handleIdAsignChange}
+                  className="border border-black p-1 rounded-sm"
+                >
                   {dataAsig.map((asig) => (
-                    <option key={asig.id} value={asig.id}>{asig.nombre}</option>
+                    <option key={asig.id} value={asig.id}>
+                      {asig.nombre}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -649,9 +601,16 @@ const Libros = () => {
               </div>
               <div>
                 <p className="mb-1">Asignatura</p>
-                <select name="abrev_asignatura" onChange={handleIdAsignChange} value={idAsign} className="border border-black p-1 rounded-sm">
+                <select
+                  name="abrev_asignatura"
+                  onChange={handleIdAsignChange}
+                  value={idAsign}
+                  className="border border-black p-1 rounded-sm"
+                >
                   {dataAsig.map((asig) => (
-                    <option key={asig.id} value={asig.id}>{asig.nombre}</option>
+                    <option key={asig.id} value={asig.id}>
+                      {asig.nombre}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -722,7 +681,6 @@ const Libros = () => {
                   className="border border-black p-1 rounded-sm"
                   value={dispon}
                 >
-
                   <option value={true}>Disponible</option>
                   <option value={false}>No Disponible</option>
                 </select>
@@ -730,65 +688,91 @@ const Libros = () => {
             </div>
             <div>
               <p className="mt-2 mb-1">Portada</p>
-              {
-                selectedItemPortada === null ? (
-                  <div className="flex">
-                    {
-                      portada === null ? (
-                        <div className="w-full p-1 self-center text-center">
-                          <label htmlFor="file" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Subir nueva portada
-                            <input type="file"
-                              name="file"
-                              id="file"
-                              onChange={handlePortadaChange}
-                              className="hidden"
-                            />
-                          </label>
-                        </div>
-                      ) : (
-                        <div className="w-full p-1 self-center text-center">
-                          <div className="flex flex-col items-center justify-center text-center">
-                            <br />
-                            <img src={mostrarPortada} width={100} height={200} alt="Portada" />
-                            <p>{portada.name}</p>
-                            <button onClick={handlePortadaRemove} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Eliminar archivo</button>
-                          </div>
-                        </div>
-                      )
-                    }
-                  </div>
-
-                ) : (
-                  <div className="flex">
-                    <img src={selectedItemPortada} width={200} height={300} alt="Portada" />
-                    {
-                      portada === null ? (
-                        <div className="w-full p-1 self-center text-center">
-                          <label htmlFor="file" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Subir nueva portada
-                            <input type="file"
-                              name="file"
-                              id="file"
-                              onChange={handlePortadaChange}
-                              className="hidden"
-                            />
-                          </label>
-                        </div>
-                      ) : (
-                        <div className="w-full p-1 self-center text-center">
-                          <div className="flex flex-col items-center justify-center text-center">
-                            <br />
-                            <img src={mostrarPortada} width={100} height={200} alt="Portada" />
-                            <p>{portada.name}</p>
-                            <button onClick={handlePortadaRemove} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Eliminar archivo</button>
-                          </div>
-                        </div>
-                      )
-                    }
-                  </div>
-                )
-              }
+              {selectedItemPortada === null ? (
+                <div className="flex">
+                  {portada === null ? (
+                    <div className="w-full p-1 self-center text-center">
+                      <label
+                        htmlFor="file"
+                        className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      >
+                        Subir nueva portada
+                        <input
+                          type="file"
+                          name="file"
+                          id="file"
+                          onChange={handlePortadaChange}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  ) : (
+                    <div className="w-full p-1 self-center text-center">
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <br />
+                        <img
+                          src={mostrarPortada}
+                          width={100}
+                          height={200}
+                          alt="Portada"
+                        />
+                        <p>{portada.name}</p>
+                        <button
+                          onClick={handlePortadaRemove}
+                          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        >
+                          Eliminar archivo
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex">
+                  <img
+                    src={selectedItemPortada}
+                    width={200}
+                    height={300}
+                    alt="Portada"
+                  />
+                  {portada === null ? (
+                    <div className="w-full p-1 self-center text-center">
+                      <label
+                        htmlFor="file"
+                        className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      >
+                        Subir nueva portada
+                        <input
+                          type="file"
+                          name="file"
+                          id="file"
+                          onChange={handlePortadaChange}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  ) : (
+                    <div className="w-full p-1 self-center text-center">
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <br />
+                        <img
+                          src={mostrarPortada}
+                          width={100}
+                          height={200}
+                          alt="Portada"
+                        />
+                        <p>{portada.name}</p>
+                        <button
+                          onClick={handlePortadaRemove}
+                          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        >
+                          Eliminar archivo
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <button
@@ -801,7 +785,10 @@ const Libros = () => {
         </div>
       </Modal>
       {/* Eliminar Asignatura */}
-      <Modal isVisible={showModalDelete} onClose={() => setShowModalDelete(false)}>
+      <Modal
+        isVisible={showModalDelete}
+        onClose={() => setShowModalDelete(false)}
+      >
         <div className=" p-6">
           <h3 className="text-xl font-semibold">Eliminar Libro</h3>
           <h3 className="mt-5 text-lg text-center font-semibold">
@@ -827,6 +814,7 @@ const Libros = () => {
             <button
               type="submit"
               className="bg-red-700 text-white p-2 hover:bg-red-400"
+              onClick={() => setShowModalDelete(false)}
             >
               Eliminar
             </button>
@@ -838,3 +826,29 @@ const Libros = () => {
 };
 
 export default Libros;
+
+export const librosLoader = async () => {
+  // await fakeNetwork();
+  const response = await fetch(`${domain_url}/api/libros_admin`, {
+    method: "GET",
+    headers: {
+      "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
+    },
+  });
+
+  // Log the response object to check if it's valid
+  console.log("Response object:", response);
+
+  // Check if the response is OK (status code 200-299)
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  // Parse the response as JSON
+  const data = await response.json();
+
+  // Log the parsed data to check if it's valid
+  console.log("Parsed data:", data);
+
+  return data;
+};

@@ -63,7 +63,7 @@ export function SidebarItem({ icon, text, active, alert, path, items }) {
   const { expanded } = useContext(SidebarContext);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   return (
-    <a href={path}>
+    <Link to={path}>
       <li
         className={`
         relative flex items-center py-2 px-3 my-1
@@ -108,6 +108,6 @@ export function SidebarItem({ icon, text, active, alert, path, items }) {
         )}
       </li>
       {items && <SubMenu items={items} subMenuState={submenuOpen} />}
-    </a>
+    </Link>
   );
 }

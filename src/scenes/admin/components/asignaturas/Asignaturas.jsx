@@ -13,11 +13,12 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { useEffect } from "react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Modal from "../../../body/asignaturas/modal";
+import { useLoaderData } from "react-router-dom";
 
 const domain_url = import.meta.env.VITE_DOMAIN_DB;
 
 const Asignaturas = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -39,45 +40,21 @@ const Asignaturas = () => {
   };
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Cargar la lista de asignaturas
-    async function fetchAsignaturas() {
-      const response = await fetch(
-        `${domain_url}/api/asignaturas`,
-        // "https://7211-187-86-164-82.ngrok-free.app/api/asignaturas",
-        {
-          method: "GET",
-          headers: {
-            "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      setData(data);
-      setIsLoading(false);
-    }
-
-    fetchAsignaturas();
-  }, []);
+  const data = useLoaderData();
 
   async function newAsignatura(asig, abrevAsignatura) {
     const data = {
       nombre: asig,
       abreviacion: abrevAsignatura,
     };
-    const response = await fetch(
-      `${domain_url}/api/asignaturas_crear`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${domain_url}/api/asignaturas_crear`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    });
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
@@ -90,17 +67,14 @@ const Asignaturas = () => {
       id: idAsign,
     };
     console.log(data);
-    const response = await fetch(
-      `${domain_url}/api/asignaturas_eliminar`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${domain_url}/api/asignaturas_eliminar`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
@@ -116,17 +90,14 @@ const Asignaturas = () => {
       abreviacion: abrevAsignatura,
     };
 
-    const response = await fetch(
-      `${domain_url}/api/asignaturas_editar`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const response = await fetch(`${domain_url}/api/asignaturas_editar`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
@@ -368,7 +339,10 @@ const Asignaturas = () => {
         </div>
       </Modal>
       {/* Eliminar Asignatura */}
-      <Modal isVisible={showModalDelete} onClose={() => setShowModalDelete(false)}>
+      <Modal
+        isVisible={showModalDelete}
+        onClose={() => setShowModalDelete(false)}
+      >
         <div className=" p-6">
           <h3 className="text-xl font-semibold">Eliminar Asignatura</h3>
           <h3 className="mt-5 text-lg text-center font-semibold">
@@ -405,3 +379,29 @@ const Asignaturas = () => {
 };
 
 export default Asignaturas;
+
+export const asignaturaLoader = async () => {
+  // await fakeNetwork();
+  const response = await fetch(`${domain_url}/api/asignaturas`, {
+    method: "GET",
+    headers: {
+      "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
+    },
+  });
+
+  // Log the response object to check if it's valid
+  console.log("Response object:", response);
+
+  // Check if the response is OK (status code 200-299)
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  // Parse the response as JSON
+  const data = await response.json();
+
+  // Log the parsed data to check if it's valid
+  console.log("Parsed data:", data);
+
+  return data;
+};
