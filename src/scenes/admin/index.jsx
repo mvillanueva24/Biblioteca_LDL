@@ -61,6 +61,7 @@ function index() {
             icon={<LuCalendarDays size={27} />}
             text="Entregas"
             name="entregas"
+            path={null}
             items={[
               {
                 text: "Entregado",

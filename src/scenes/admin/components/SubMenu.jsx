@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LuBookOpen, LuCalendarX, LuBookOpenCheck } from "react-icons/lu";
 
-export default function Submenu({ items, subMenuState }) {
+export default function Submenu({ items, subMenuState, expanded }) {
   return (
     <ul
       className={`flex-1 group bg-white shadow-lg transition-colors rounded-md ml-10  ${
@@ -19,12 +19,21 @@ export default function Submenu({ items, subMenuState }) {
             font-medium rounded-md cursor-pointer
             transition-colors group
             hover:bg-indigo-50 text-gray-600
-            group
-        
+            group ${expanded ? "block" : "hidden"}        
     `}
           >
-            {getIconComponent(item.icon)}
-            <span className={`overflow-hidden transition-all ml-2`}>
+            <div
+              className={`overflow-hidden transition-all ${
+                expanded ? "w-8" : "w-0"
+              }`}
+            >
+              {getIconComponent(item.icon)}
+            </div>
+            <span
+              className={`overflow-hidden transition-all ${
+                expanded ? "w-40 ml-3" : "w-0"
+              }`}
+            >
               {item.text}
             </span>
           </li>
