@@ -2,9 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import Book from "../../../../images/Claudio-Gabis-portada.jpg";
 import Modal from "../modal";
 import { useStateContext } from "../../../../contexts/ContextProvider";
+import Slider from "@mui/material/Slider";
 
 export default function BookCard(props) {
   // Data
+  const url = import.meta.env.VITE_DOMAIN_DB;
   const [showModal, setShowModal] = useState(false);
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [fechaDevolucion, setFechaDevolucion] = useState("");
@@ -85,6 +87,11 @@ export default function BookCard(props) {
     fetchUserData();
   }, []);
 
+  const [numeroSeleccionado, setNumeroSeleccionado] = useState(null);
+  function valuetext(value) {
+    setNumeroSeleccionado(value);
+  }
+
   return (
     <Fragment>
       <div className="m-2 h-auto p-3 border-b-2 border-b-gray-700">
@@ -116,7 +123,10 @@ export default function BookCard(props) {
             </h5>
             <button
               className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
-              onClick={() => setShowModal(true)}
+              onClick={() => {
+                setIdLibro(props.libro.id);
+                setShowModal(true);
+              }}
             >
               Reservar
             </button>
@@ -142,16 +152,12 @@ export default function BookCard(props) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              console.log(idLibro, currentUser.id, numeroSeleccionado);
               setIdLibro("");
               setIdUser("");
               setFechaEntrega("");
               setFechaDevolucion("");
-              props.crearReserva(
-                idLibro,
-                currentUser.id,
-                fechaEntrega,
-                fechaDevolucion
-              );
+              props.crearReserva(idLibro, currentUser.id, numeroSeleccionado);
               setShowModal(false);
             }}
             action=""
@@ -159,8 +165,21 @@ export default function BookCard(props) {
             className="mt-4 flex flex-col"
           >
             <input type="hidden" name="id_libro" value={idLibro} />
-            <input type="hidden" name="id_user" value="2" />
-            <p className="mb-1">Fecha de entrega</p>
+            <input type="hidden" name="id_user" value={currentUser} />
+            <span className="mb-2">Dias de préstamo</span>
+
+            <Slider
+              aria-label="Dias_Prestamo"
+              defaultValue={1}
+              getAriaValueText={valuetext}
+              valueLabelDisplay="auto"
+              step={1}
+              marks
+              min={1}
+              max={7}
+            />
+
+            {/* <p className="mb-1">Fecha de entrega</p>
             <input
               type="date"
               name="f_entrega"
@@ -180,7 +199,7 @@ export default function BookCard(props) {
               onChange={handleFechaDevolucionChange}
               min={fechaEntrega}
               max={maxDate}
-            />
+            /> */}
             <button
               type="submit"
               className="mt-3 bg-blue-600 text-white p-2 hover:bg-blue-500"

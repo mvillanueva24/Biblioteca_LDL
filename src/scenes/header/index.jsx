@@ -9,13 +9,15 @@ const url = import.meta.env.VITE_DOMAIN_DB;
 
 export function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const token = localStorage.getItem('TOKEN');
+  const token = localStorage.getItem("TOKEN");
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
   const { currentUser, userToken, setCurrentUser, setUserToken } =
     useStateContext();
-  { console.log(currentUser) }
+  {
+    console.log(currentUser);
+  }
   const handleLogout = async (ev) => {
     try {
       const response = await fetch(`${url}/api/logout`, {
@@ -23,7 +25,7 @@ export function Header() {
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "69420",
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -43,23 +45,23 @@ export function Header() {
       try {
         if (!token) {
           // Manejar la situación en la que no hay token disponible
-          console.error('No hay token disponible');
+          console.error("No hay token disponible");
           return;
         }
 
         // Realiza la solicitud GET a la ruta '/me' incluyendo el token en el encabezado de Authorization
         const response = await fetch(`${url}/api/yo`, {
-          method: 'GET',
+          method: "GET",
           headers: {
             "ngrok-skip-browser-warning": "69420",
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             // Puedes incluir otros encabezados según sea necesario
           },
           // Puedes incluir otras opciones de configuración según tus necesidades
         });
 
         if (!response.ok) {
-          throw new Error('Error al obtener datos del servidor');
+          throw new Error("Error al obtener datos del servidor");
         }
 
         // Parsea la respuesta como JSON
@@ -115,7 +117,6 @@ export function Header() {
     open: { x: "calc(100% - 60px)", y: "7px", opacity: 1 },
   };
 
-
   return (
     <nav className="bg-[#e5eff9] fixed w-full z-50">
       <div className="px-10 mx-auto">
@@ -159,21 +160,12 @@ export function Header() {
               <Link
                 to="/login"
                 className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
-                  hover:text-white rounded transition duration-300 shadow">
+                  hover:text-white rounded transition duration-300 shadow"
+              >
                 Login
               </Link>
             )}
-
           </div>
-          {/* <div className="hidden md:flex items-center">
-            <Link
-              to="/login"
-              className="py-2 px-3 bg-[#3386c3] hover:bg-[#236aa6] text-white
-              hover:text-white rounded transition duration-300 shadow"
-            >
-              Login
-            </Link>
-          </div> */}
 
           {/* mobile button goes here */}
           <div className="md:hidden flex items-center">
@@ -203,10 +195,11 @@ export function Header() {
         initial="closed"
         animate={isMobileMenuOpen ? "open" : "closed"}
         variants={maskVariants}
-        className={`${isMobileMenuOpen
+        className={`${
+          isMobileMenuOpen
             ? "block fixed top-0 left-0 right-0 bottom-0"
             : "hidden"
-          } bg-black z-20`}
+        } bg-black z-20`}
         onClick={() => setMobileMenuOpen(false)} // Cierra el menú al hacer clic en la máscara
       />
       {/* Botón de cierre */}
@@ -215,10 +208,11 @@ export function Header() {
         animate={isMobileMenuOpen ? "open" : "closed"}
         variants={moveButtonToTopRight}
         whileTap={{ scale: 0.8 }} // Animación de escala al presionar el botón
-        className={`${isMobileMenuOpen
+        className={`${
+          isMobileMenuOpen
             ? "block top-3 right-3 rounded-full p-2 z-30"
             : "hidden left-[-100%]"
-          } md:hidden absolute bg-white`}
+        } md:hidden absolute bg-white`}
         onClick={() => setMobileMenuOpen(false)}
       >
         <svg
@@ -241,8 +235,9 @@ export function Header() {
         initial="closed"
         animate={isMobileMenuOpen ? "open" : "closed"}
         variants={menuVariants}
-        className={`${isMobileMenuOpen ? "block left-0" : "hidden left-[-100%]"
-          } md:hidden absolute h-screen top-0 left-0 w-[17em] bg-white z-30 pt-5 px-3`}
+        className={`${
+          isMobileMenuOpen ? "block left-0" : "hidden left-[-100%]"
+        } md:hidden absolute h-screen top-0 left-0 w-[17em] bg-white z-30 pt-5 px-3`}
       >
         <motion.div>
           <div className="py-1 pl-[0.10rem] cursor-pointer rounded hover:bg-[#f3f7fc]">
