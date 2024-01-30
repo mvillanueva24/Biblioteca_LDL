@@ -2,15 +2,14 @@ import React from "react";
 import BookCard from "./bookCard";
 
 export default function index(props) {
-  function newBooking(idLibro, idUser, fechaEntrega, fechaDevolucion) {
+  const url = import.meta.env.VITE_DOMAIN_DB;
+  function newBooking(idLibro, idUser, dias_prestamo) {
     const data = {
       libro_id: idLibro,
       alumno_id: idUser,
-      fecha_entrega: fechaEntrega,
-      fecha_devolucion: fechaDevolucion,
+      dias_prestamo: dias_prestamo,
     };
-    const url = `https://da5e-187-86-164-86.ngrok-free.app/api/reservas_crear`;
-    fetch(url, {
+    fetch(`${url}/api/reservas_crear`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

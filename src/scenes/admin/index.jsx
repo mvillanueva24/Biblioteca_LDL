@@ -64,14 +64,14 @@ function index() {
             path={null}
             items={[
               {
-                text: "Entregado",
-                path: "entregas/entregado",
-                icon: "LuBookOpen",
-              },
-              {
                 text: "No Entregado",
                 path: "entregas/no-entregado",
                 icon: "LuCalendarX",
+              },
+              {
+                text: "Entregado",
+                path: "entregas/entregado",
+                icon: "LuBookOpen",
               },
               {
                 text: "Devuelto",

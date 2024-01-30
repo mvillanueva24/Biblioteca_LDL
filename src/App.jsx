@@ -21,9 +21,15 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Entregados from "./scenes/admin/components/entregas/Entregados";
-import NoEntregados from "./scenes/admin/components/entregas/NoEntregados";
-import Devueltos from "./scenes/admin/components/entregas/Devueltos";
+import Entregados, {
+  entregadosLoader,
+} from "./scenes/admin/components/entregas/Entregados";
+import NoEntregados, {
+  noEntregadosLoader,
+} from "./scenes/admin/components/entregas/NoEntregados";
+import Devueltos, {
+  devueltosLoader,
+} from "./scenes/admin/components/entregas/Devueltos";
 import Entregas from "./scenes/admin/components/entregas/Entregas";
 
 const router = createBrowserRouter(
@@ -41,9 +47,22 @@ const router = createBrowserRouter(
         <Route path="libros" element={<Libros />} loader={librosLoader} />
         <Route path="reservas" element={<Reservas />} loader={reservaLoader} />
         <Route path="entregas" element={<Entregas />}>
-          <Route path="entregado" element={<Entregados />} />
-          <Route path="no-entregado" element={<NoEntregados />} />
-          <Route path="devuelto" element={<Devueltos />} />
+          <Route
+            path="no-entregado"
+            element={<NoEntregados />}
+            loader={noEntregadosLoader}
+          />
+
+          <Route
+            path="entregado"
+            element={<Entregados />}
+            loader={entregadosLoader}
+          />
+          <Route
+            path="devuelto"
+            element={<Devueltos />}
+            loader={devueltosLoader}
+          />
         </Route>
       </Route>
     </Route>
