@@ -20,7 +20,26 @@ const url = import.meta.env.VITE_DOMAIN_DB;
 
 const Devueltos = () => {
   const data = useLoaderData();
+
   const navigate = useNavigate();
+
+  async function acceptOrCancelEntrega(idEntrega) {
+    const data = {
+      id: idEntrega,
+    };
+    const response = await fetch(`${url}/api/entregas_concluir`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error("Algo salió mal :c");
+    }
+    navigate("/admin/entregas/no-entregado");
+  }
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -47,9 +66,17 @@ const Devueltos = () => {
       cell: (info) => <span>{info.getValue()}</span>,
       header: "Codigo del Libro",
     }),
-    columnHelper.accessor("dias_prestamo", {
-      cell: (info) => <span>{info.getValue()} dias</span>,
-      header: "Días préstamo",
+    columnHelper.accessor("fecha_entrega", {
+      cell: (info) => <span>{info.getValue()}</span>,
+      header: "Fecha de Entrega",
+    }),
+    columnHelper.accessor("fecha_devolucion", {
+      cell: (info) => <span>{info.getValue()}</span>,
+      header: "Fecha de devolución",
+    }),
+    columnHelper.accessor("demora", {
+      cell: (info) => <span>{info.getValue()} días</span>,
+      header: "Días de demora",
     }),
   ];
 
@@ -65,11 +92,10 @@ const Devueltos = () => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
   const date = new Date();
   return (
     <div className="p-2 w-full  fill-gray-400 ">
-      <h3 className="text-2xl">Libros no entregados</h3>
+      <h3 className="text-2xl">Reservas concluidas</h3>
       {/* INICIO BUSCADOR */}
       <div className="mt-5 flex justify-between mb-2">
         <div className="w-full flex items-center gap-1">
@@ -96,7 +122,6 @@ const Devueltos = () => {
                   )}
                 </th>
               ))}
-              <th>Acciones</th>
             </tr>
           ))}
         </thead>
@@ -114,14 +139,6 @@ const Devueltos = () => {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
-                <td className="flex gap-6 mt-1">
-                  <button
-                    className="bg-green-600 text-white p-2 rounded-full"
-                    onClick={() => {}}
-                  >
-                    <RxCheck size={20} />
-                  </button>
-                </td>
               </tr>
             ))
           ) : (
@@ -168,7 +185,7 @@ export default Devueltos;
 
 export const devueltosLoader = async () => {
   // await fakeNetwork();
-  const response = await fetch(`${url}/api/entregas/no_entregados`, {
+  const response = await fetch(`${url}/api/entregas/concluidos`, {
     method: "GET",
     headers: {
       "ngrok-skip-browser-warning": "69420", // Puedes agregar más encabezados según sea necesario
