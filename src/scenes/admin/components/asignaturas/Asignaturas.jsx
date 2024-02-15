@@ -163,7 +163,7 @@ const Asignaturas = () => {
           </button>
         </div>
       </div>
-      <table className="border border-gray-700 w-full text-left">
+      <table className="border border-gray-700 w-full text-left table-fixed">
         <thead className="bg-[#236aa6] text-white">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

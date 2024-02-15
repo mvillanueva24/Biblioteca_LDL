@@ -67,7 +67,7 @@ export default function BooksMenu(props) {
           <li
             key={asig.id}
             onClick={() => props.seleccionarAsignatura(asig.id)}
-            className="py-2 h-auto border-t text-lg hover:bg-gray-100 pl-1 flex"
+            className="py-2 h-auto border-t text-lg hover:bg-gray-100 pl-1 flex cursor-pointer"
           >
             {asig.nombre}
           </li>

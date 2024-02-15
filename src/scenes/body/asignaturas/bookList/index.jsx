@@ -32,7 +32,7 @@ export default function index(props) {
       });
   }
   return (
-    <div className="w-full border border-black">
+    <div className="w-full border border-black grid grid-cols-1 xl:grid-cols-2">
       {props.libros.map((el) => (
         <BookCard libro={el} crearReserva={newBooking} />
       ))}

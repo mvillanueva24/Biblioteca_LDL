@@ -6,6 +6,8 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import AsignaturasUser from "./pages/asignaturas";
 import Admin from "./scenes/admin";
+import { useStateContext } from "./contexts/ContextProvider";
+import { Navigate } from "react-router-dom";
 import Asignaturas, {
   asignaturaLoader,
 } from "./scenes/admin/components/asignaturas/Asignaturas";
@@ -32,13 +34,30 @@ import Devueltos, {
 } from "./scenes/admin/components/entregas/Devueltos";
 import Entregas from "./scenes/admin/components/entregas/Entregas";
 
+const ProtectedRoute = ({ children }) => {
+  const { currentUser, userToken } = useStateContext();
+
+  if (!userToken) {
+    return <Navigate to="/login" replace={true} />; // Redirigir al login si no hay token
+  }
+
+  return children; // Permitir acceso si hay token
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" index element={<Home />} />
       <Route path="asignaturas" element={<AsignaturasUser />} />
       <Route path="login" element={<Login />} />
-      <Route path="admin" element={<Admin />}>
+      <Route
+        path="admin"
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }
+      >
         <Route
           path="asignaturas"
           element={<Asignaturas />}
