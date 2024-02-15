@@ -85,6 +85,7 @@ const Reservas = () => {
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
+    navigate("/admin/reservas");
   }
 
   async function acceptOrCancelReserva(idReserva, decision) {
@@ -199,7 +200,7 @@ const Reservas = () => {
       </div>
 
       {/* INICIO TABLA DE RESERVAS */}
-      <table className="border border-gray-700 w-full text-left">
+      <table className="border border-gray-700 w-full text-left table-fixed">
         <thead className="bg-[#236aa6] text-white">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

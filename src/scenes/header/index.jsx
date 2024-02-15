@@ -15,9 +15,6 @@ export function Header() {
   };
   const { currentUser, userToken, setCurrentUser, setUserToken } =
     useStateContext();
-  {
-    console.log(currentUser);
-  }
   const handleLogout = async (ev) => {
     try {
       const response = await fetch(`${url}/api/logout`, {

@@ -2,6 +2,8 @@ import React, { useState, useMemo } from "react";
 import Portada from "../../../../images/descarga.jpg";
 
 export default function Libro(props) {
+  const { libro } = props;
+
   const [hovered, setHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -11,11 +13,6 @@ export default function Libro(props) {
   const handleMouseLeave = () => {
     setHovered(false);
   };
-
-  const libro = useMemo(
-    () => props.libros.find((l) => l.id === props.libro.id),
-    [props.libro]
-  );
 
   return (
     <div

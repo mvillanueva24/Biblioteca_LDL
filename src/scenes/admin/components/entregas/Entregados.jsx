@@ -51,7 +51,7 @@ const Entregados = () => {
     if (!response.ok) {
       throw new Error("Algo salió mal :c");
     }
-    navigate("/admin/entregas/no-entregado");
+    navigate("/admin/entregas/entregado");
   }
 
   const columnHelper = createColumnHelper();
@@ -119,7 +119,7 @@ const Entregados = () => {
       </div>
 
       {/* INICIO TABLA DE RESERVAS */}
-      <table className="border border-gray-700 w-full text-left">
+      <table className="border border-gray-700 w-full text-left table-fixed">
         <thead className="bg-[#236aa6] text-white">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

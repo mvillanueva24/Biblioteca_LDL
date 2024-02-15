@@ -8,7 +8,7 @@ import global from "../../../global";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { AiOutlineEllipsis } from "react-icons/ai";
 
-export default function index() {
+export default function index(props) {
   let isTab = useMediaQuery({ query: "(max-width: 980px" });
   const url = import.meta.env.VITE_DOMAIN_DB;
   const [IsMobileOpen, setIsMobileOpen] = useState(false);
@@ -66,13 +66,33 @@ export default function index() {
   const [page, setCurrentPage] = useState(1);
   let urlLibros = null;
   const [establecerAsignatura, setEstablecesAsignatura] = useState("");
+  const [searchBook, setSearchBook] = useState("");
+  const [selectedBook, setSelectedBook] = useState("");
 
   const seleccionarAsignatura = (datoshijo) => {
+    setSearchBook("");
+    setSelectedBook("");
     setEstablecesAsignatura(datoshijo);
+  };
+
+  const busquedaLibro = (datoshijo) => {
+    setSearchBook(datoshijo);
+    setEstablecesAsignatura("");
+    setSelectedBook("");
+  };
+
+  const seleccionLibro = (datoshijo) => {
+    setSearchBook("");
+    setEstablecesAsignatura("");
+    setSelectedBook(datoshijo);
   };
 
   if (establecerAsignatura) {
     urlLibros = `${url}/api/libros/${establecerAsignatura}?page=${page}`;
+  } else if (searchBook) {
+    urlLibros = `${url}/api/libros_busqueda?search=${searchBook}&page=${page}`;
+  } else if (selectedBook) {
+    urlLibros = `${url}/api/libros_id?id=${selectedBook}&page=${page}`;
   } else {
     urlLibros = `${url}/api/libros?page=${page}`;
   }
@@ -100,9 +120,9 @@ export default function index() {
 
   const fetchLibros = (url) => {
     const fetchData = async () => {
-      if (establecerAsignatura) {
+      if (searchBook.length != 0 || selectedBook.length != 0) {
         const result2 = await fetch(url, {
-          method: "GET",
+          method: "POST",
           headers: {
             "ngrok-skip-browser-warning": "69420",
 
@@ -111,7 +131,6 @@ export default function index() {
         });
         result2.json().then((json) => {
           setLibros(json.data);
-          console.log(establecerAsignatura);
           setInfo(json);
         });
       } else {
@@ -136,7 +155,7 @@ export default function index() {
 
   useEffect(() => {
     fetchLibros(urlLibros);
-  }, [page, establecerAsignatura]);
+  }, [page, establecerAsignatura, searchBook, selectedBook]);
 
   function newAsignatura(asig, abrevAsignatura) {
     const data = {
@@ -168,7 +187,7 @@ export default function index() {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto px-3 py-5">
+    <div className="max-w-screen-2xl mx-auto px-3 py-5">
       <motion.div
         initial="closed"
         animate={IsMobileOpen ? "open" : "closed"}
@@ -223,7 +242,12 @@ export default function index() {
       </motion.nav>
 
       <div>
-        <FilterButton menuActivate={() => changeIsMenuOpen()} />
+        <FilterButton
+          menuActivate={() => changeIsMenuOpen()}
+          data={libros}
+          busquedaLibro={busquedaLibro}
+          seleccionLibro={seleccionLibro}
+        />
       </div>
       <div className="mx-auto mt-8 border border-black px-5 py-3">
         <div className="flex gap-3 ">

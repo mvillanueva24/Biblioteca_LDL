@@ -43,6 +43,29 @@ export default function BookCard(props) {
     return fecha_new;
   };
 
+  const useRestrictButton = () => {
+    const { currentUser, userToken } = useStateContext();
+
+    // const isAllowed = () => {
+    //   // Implementar la lógica para determinar si el usuario está autorizado
+    //   // Ejemplo: verificar si el usuario tiene un rol específico
+    //   if (currentUser.rol === "Administrador") {
+    //     return true;
+    //   }
+    //   return false;
+    // };
+    const isAllowed = () => {
+      // Implementar la lógica para determinar si el usuario está autorizado
+      // Ejemplo: verificar si el usuario tiene un rol específico
+      if (userToken) {
+        return true;
+      }
+      return false;
+    };
+
+    return { isAllowed };
+  };
+
   const handleFechaDevolucionChange = (event) => {
     setFechaDevolucion(event.target.value);
     //setFechaDevolucion(fechaEntrega);
@@ -92,6 +115,8 @@ export default function BookCard(props) {
     setNumeroSeleccionado(value);
   }
 
+  const { isAllowed } = useRestrictButton();
+
   return (
     <Fragment>
       <div className="m-2 h-auto p-3 border-b-2 border-b-gray-700">
@@ -121,15 +146,26 @@ export default function BookCard(props) {
             <h5 className="sm:text-gray-600 text-sm mb-2 sm:text-base ">
               Disponible: {props.libro.disponibilidad ? "Sí" : "No"}
             </h5>
-            <button
-              className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
-              onClick={() => {
-                setIdLibro(props.libro.id);
-                setShowModal(true);
-              }}
-            >
-              Reservar
-            </button>
+
+            {isAllowed() && (
+              <button
+                className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
+                onClick={() => {
+                  setIdLibro(props.libro.id);
+                  setShowModal(true);
+                }}
+              >
+                Reservar
+              </button>
+            )}
+            {!isAllowed() && (
+              <button
+                className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base opacity-50"
+                onClick={() => {}}
+              >
+                Reservar
+              </button>
+            )}
           </div>
           <div className="w-[20%] mt-3">
             <img
