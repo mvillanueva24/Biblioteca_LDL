@@ -3,6 +3,7 @@ import Logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";
 import { BiLastPage, BiFirstPage } from "react-icons/bi";
+import { useStateContext } from "../../../contexts/ContextProvider";
 import {
   GrFormPrevious,
   GrFormNext,
@@ -15,6 +16,30 @@ const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+
+  const { currentUser, userToken, setCurrentUser, setUserToken } =
+    useStateContext();
+  const handleLogout = async (ev) => {
+    try {
+      const response = await fetch(`${url}/api/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al cerrar sesión");
+      }
+
+      setCurrentUser({});
+      setUserToken(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
@@ -55,6 +80,7 @@ export default function Sidebar({ children }) {
             className={`overflow-hidden transition-all text-[1.4em] ml-4 ${
               expanded ? "w-40" : "w-0"
             }`}
+            onClick={() => handleLogout()}
           >
             Exit
           </span>

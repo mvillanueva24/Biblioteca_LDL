@@ -8,7 +8,7 @@ import global from "../../../global";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { AiOutlineEllipsis } from "react-icons/ai";
 
-export default function index(props) {
+export default function index() {
   let isTab = useMediaQuery({ query: "(max-width: 980px" });
   const url = import.meta.env.VITE_DOMAIN_DB;
   const [IsMobileOpen, setIsMobileOpen] = useState(false);
@@ -231,11 +231,12 @@ export default function index(props) {
         className={`${
           IsMobileOpen && isTab ? "block rigth-0" : "hidden right-[100%]"
         } 
-        absolute bg-white text-black shadow-xl top-0 right-0 z-[999] w-[16rem] max-w-[16rem] h-full pt-5 px-3`}
+        fixed bg-white text-black shadow-xl top-0 right-0 z-[999] w-[16rem] max-w-[16rem] h-screen pt-5 px-3`}
       >
-        <div>
+        <div className="block overflow-y-auto">
           <BooksMenu
             DataAsignaturas={asignaturas}
+            Menustate={IsMenuOpen}
             crearAsignatura={newAsignatura}
           />
         </div>
@@ -249,16 +250,20 @@ export default function index(props) {
           seleccionLibro={seleccionLibro}
         />
       </div>
-      <div className="mx-auto mt-8 border border-black px-5 py-3">
-        <div className="flex gap-3 ">
-          <div className={`${IsMenuOpen ? "block" : "hidden"} w-[30%] h-min `}>
+      <div className="mx-auto mt-8 bg-[#f3f7fc] px-5 py-3 rounded-lg">
+        <div className="flex gap-3 h-screen">
+          <div
+            className={`${
+              IsMenuOpen ? "block" : "hidden"
+            } w-[30%] overflow-y-auto`}
+          >
             <BooksMenu
               DataAsignaturas={asignaturas}
               Menustate={IsMenuOpen}
               seleccionarAsignatura={seleccionarAsignatura}
             />
           </div>
-          <div className="w-full">
+          <div className={`w-full ${isTab ? "" : "overflow-y-auto"} `}>
             <BookList libros={libros} asignatura={establecerAsignatura} />
           </div>
         </div>

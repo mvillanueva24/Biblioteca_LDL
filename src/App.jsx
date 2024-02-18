@@ -40,6 +40,9 @@ const ProtectedRoute = ({ children }) => {
   if (!userToken) {
     return <Navigate to="/login" replace={true} />; // Redirigir al login si no hay token
   }
+  // if (currentUser.rol != "Admin") {
+  //   return <Navigate to="/login" replace={true} />; // Redirigir al login si no hay token
+  // }
 
   return children; // Permitir acceso si hay token
 };

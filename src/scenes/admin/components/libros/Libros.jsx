@@ -24,6 +24,26 @@ const domain_url = import.meta.env.VITE_DOMAIN_DB;
 
 // COMPONENTE
 const Libros = () => {
+  useEffect(() => {
+    // Realizar la solicitud a la API usando fetch
+    const fetchData = async () => {
+      const result = await fetch(`${domain_url}/api/asignaturas`, {
+        method: "GET",
+        headers: {
+          // Authorization: "ak_2WpdCVHmAYXCqbSnuDcW6FAiJP1",
+          // "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+
+          // Otras cabeceras según sea necesario
+        },
+      });
+      result.json().then((json) => {
+        setDataAsig(json);
+      });
+    };
+    fetchData();
+  }, []);
+
   // const [data, setData] = useState([]);
   const [dataAsig, setDataAsig] = useState([]);
   const [showModalAdd, setShowModalAdd] = useState(false);

@@ -40,6 +40,7 @@ const Entregados = () => {
     const data = {
       id: idEntrega,
     };
+    console.log(idEntrega);
     const response = await fetch(`${url}/api/entregas_concluir`, {
       method: "POST",
       headers: {
@@ -119,7 +120,7 @@ const Entregados = () => {
       </div>
 
       {/* INICIO TABLA DE RESERVAS */}
-      <table className="border border-gray-700 w-full text-left table-fixed">
+      <table className="border border-gray-700 w-full text-left">
         <thead className="bg-[#236aa6] text-white">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
