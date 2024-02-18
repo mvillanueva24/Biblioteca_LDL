@@ -52,8 +52,8 @@ export default function BooksMenu(props) {
   return (
     <div
       className={`${
-        props.Menustate ? "border-r-2 border-b-2 border-gray-400" : " "
-      } px-3 py-3 `}
+        props.Menustate ? "border-r-2 border-b-2 border-gray-400 " : " "
+      } px-3 py-3`}
     >
       <h4 className="font-bold text-xl m-3">Asignaturas</h4>
       {/* <button
@@ -74,7 +74,7 @@ export default function BooksMenu(props) {
         ))}
       </ul>
 
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+      {/* <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="p-6">
           <h3 className="text-xl font-semibold">Crear Asignatura</h3>
           <form
@@ -114,7 +114,7 @@ export default function BooksMenu(props) {
             </button>
           </form>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

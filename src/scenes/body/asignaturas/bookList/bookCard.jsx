@@ -147,7 +147,7 @@ export default function BookCard(props) {
               Disponible: {props.libro.disponibilidad ? "Sí" : "No"}
             </h5>
 
-            {isAllowed() && (
+            {/* {isAllowed() && (
               <button
                 className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
                 onClick={() => {
@@ -159,6 +159,24 @@ export default function BookCard(props) {
               </button>
             )}
             {!isAllowed() && (
+              <button
+                className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base opacity-50"
+                onClick={() => {}}
+              >
+                Reservar
+              </button>
+            )} */}
+            {isAllowed() && props.libro.disponibilidad == true ? (
+              <button
+                className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base "
+                onClick={() => {
+                  setIdLibro(props.libro.id);
+                  setShowModal(true);
+                }}
+              >
+                Reservar
+              </button>
+            ) : (
               <button
                 className="border border-[#1e5586] text-[#1e5586] hover:bg-[#f3f7fc] p-2 rounded-lg text-sm sm:text-base opacity-50"
                 onClick={() => {}}
@@ -183,7 +201,7 @@ export default function BookCard(props) {
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className=" p-6">
           <h3 className="text-xl font-semibold">Reservar Libro</h3>
-          <h3 className="text-lg mt-3">Titulo {props.libro.titulo}</h3>
+          <h3 className="text-lg mt-3">Titulo: {props.libro.titulo}</h3>
           <p className="text-base text-gray-500">Codigo {props.libro.codigo}</p>
           <form
             onSubmit={(e) => {

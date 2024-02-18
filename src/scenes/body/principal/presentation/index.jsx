@@ -12,8 +12,9 @@ export default function index() {
   const [searchState, useSearchState] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [newdata, setNewData] = useState([]);
-  const [seleccionLibro, setSeleccionLibro] = useState("");
-  const [busquedaLibro, setBusquedaLibro] = useState("");
+  const [establecerAsignatura, setEstablecesAsignatura] = useState("");
+  const [searchBook, setSearchBook] = useState("");
+  const [selectedBook, setSelectedBook] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,11 +56,9 @@ export default function index() {
   };
 
   const handleSeleccionLibro = (datoshijo) => {
-    navigate("/asignaturas", {
-      state: {
-        searchBook: datoshijo,
-      },
-    });
+    setSelectedBook(datoshijo);
+    setEstablecesAsignatura("");
+    setSearchBook("");
   };
 
   function searchFilterHandle() {
@@ -73,12 +72,10 @@ export default function index() {
 
   const handleSubmit = () => {
     if (busqueda.length > 1) {
-      setBusquedaLibro(busqueda);
-      navigate("/asignaturas", {
-        state: {
-          selectedBook: busqueda,
-        },
-      });
+      setSearchBook(busqueda);
+      // console.log(busqueda);
+      setSelectedBook("");
+      setEstablecesAsignatura("");
     }
   };
   return (
